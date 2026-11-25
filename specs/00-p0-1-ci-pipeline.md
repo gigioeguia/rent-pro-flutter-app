@@ -1,6 +1,6 @@
 # SPEC 00 — Pipeline CI (GitHub Actions) para la app Flutter
 
-> **Status:** Draft
+> **Status:** Implementado
 > **Depends on:** —
 > **Date:** 2026-11-25
 > **Objective:** Establecer un pipeline de CI reproducible para la app Flutter que ejecute análisis estático, pruebas con cobertura y build de APK, con quality gates en `main`.
