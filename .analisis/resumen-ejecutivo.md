@@ -30,7 +30,7 @@ Cuenta con un backend web (Laravel) que actúa como “cerebro” (API, pagos, p
 
 ## Recomendaciones priorizadas (negocio)
 - **P0 (inmediato, 1–2 semanas):** eliminar secretos del cliente, migrar tokens a almacenamiento seguro, corregir logout/sesión, activar ofuscación y firma segura, permisos mínimos.
-- **P1 (2–6 semanas):** interfaces de repositorios + inyección de dependencias, unificar paginación/estado, tests de modelos/repositorios críticos.
+- **P1 (2–6 semanas):** corrección de flujos funcionales críticos (endpoints de withdraw/refund, totales, contacto con landlord, validaciones de perfil) e interfaces de repositorios + inyección de dependencias.
 - **P2 (6–12 semanas):** modernización de dependencias (Riverpod, auto_route, etc.), cobertura ≥60% en core/pagos/auth, crash reporting.
 
 ## Métricas de éxito propuestas
@@ -38,6 +38,7 @@ Cuenta con un backend web (Laravel) que actúa como “cerebro” (API, pagos, p
 - 0 credenciales en almacenamiento no seguro.
 - Pipeline CI en verde.
 - Cobertura ≥60% en módulos críticos.
+- Reducción de crashes por parsing null/errores.
 - Release firmado y ofuscado.
 
 ## Conclusión
