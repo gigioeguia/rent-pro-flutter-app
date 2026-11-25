@@ -7,7 +7,11 @@ on:
 
 jobs:
   analyze-and-test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,11 +30,17 @@ jobs:
         run: flutter analyze
 
       - name: Test
+        if: matrix.os == 'ubuntu-latest'
         run: flutter test --coverage
 
       - name: Upload coverage
+        if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: coverage/lcov.info
           if-no-files-found: ignore
+
+      - name: Build iOS (smoke)
+        if: matrix.os == 'macos-latest'
+        run: flutter build ios --no-codesign

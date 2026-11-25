@@ -36,13 +36,13 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 
 | ID | Tarea | Archivos clave | Criterio de aceptación |
 |----|-------|----------------|------------------------|
-| P0-1 | Configurar pipeline CI (GitHub Actions) | `.github/workflows/ci.yml` | Pipeline ejecuta analyze + test + coverage |
+| P0-1 | Configurar pipeline CI (GitHub Actions) | `.github/workflows/ci.yml` | Pipeline ejecuta analyze + test + coverage; matriz de runners (ubuntu-latest para Android/tests, macos-latest para iOS) |
 | P0-2 | Fijar versión de Flutter/Dart (FVM) en CI | `.fvmrc`, workflow | CI usa Flutter 3.35.0 |
 | P0-3 | Consolidar excepciones de análisis (lints) | `analysis_options.yaml` | Excepciones documentadas y justificadas |
 | P0-4 | Documentar overrides de dependencias | `pubspec.yaml`, docs | Overrides listados con razón y plan de salida |
 | P0-5 | Estabilizar tests del calculador | `_mortgage_calculator.dart`, test file | `fvm flutter test` en verde |
 | P0-6 | Agregar smoke test de arranque | `test/` | App inicia sin crash en test |
-| P0-7 | Configurar reporte de cobertura | workflow, `coverage/` | Reporte lcov generado y archivado |
+| P0-7 | Configurar reporte de cobertura | workflow, `coverage/` | Reporte lcov generado y archivado; umbral inicial bajo, incrementar gradualmente (10% → 30% → 60%) |
 | P0-8 | Quality gates (fail on error) | workflow | PR bloqueado si analyze/test fallan |
 | P0-9 | Documentar comandos locales | `README.md` / `CONTRIBUTING.md` | Comandos reproducibles |
 | P0-10 | Limpiar issues de `flutter analyze` (32 infos) y CI estricto | `lib/...` (imports, prints, deprecations), `.github/workflows/ci.yml` | `flutter analyze` sin issues; CI con `flutter analyze` (fatal infos) |
