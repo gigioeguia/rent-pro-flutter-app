@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -42,6 +42,4 @@ jobs:
           path: coverage/lcov.info
           if-no-files-found: ignore
 
-      - name: Build iOS (smoke)
-        if: matrix.os == 'macos-latest'
-        run: flutter build ios --no-codesign
+      # iOS build movido a .github/workflows/ios-build.yml (manual/tags)
