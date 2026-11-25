@@ -92,6 +92,12 @@ class MortgageCalculator {
     if (interestRate < 0) {
       throw ArgumentError('Interest rate cannot be negative');
     }
+    if (interestRate > 100) {
+      throw ArgumentError('Interest rate is too high');
+    }
+    if (totalPropertyValue > 1e15) {
+      throw ArgumentError('Total property value is too large');
+    }
     if (tenureYears <= 0) {
       throw ArgumentError('Tenure years must be greater than 0');
     }
@@ -100,11 +106,7 @@ class MortgageCalculator {
   MortgageCalculatedData calculateMortgageData() {
     _validateInputs();
 
-    // Get current DateTime for calendar-based calculations
-    DateTime now = DateTime.now();
-    int currentYear = now.year;
-    int currentMonth = now.month;
-
+    // Year/month indices are deterministic (1-based), independent of the current date.
     // Calculate principal amount
     num principalAmount = totalPropertyValue - downPaymentAmount;
 
@@ -145,10 +147,9 @@ class MortgageCalculator {
     Map<int, List<MonthlyData>> yearToMonthly = {};
 
     for (int payment = 1; payment <= totalMonths; payment++) {
-      // Calculate month number and year based on current date
-      int monthNumber = currentMonth + (payment - 1);
-      int year = currentYear + ((monthNumber - 1) ~/ 12);
-      int monthIndex = ((monthNumber - 1) % 12) + 1;
+      // Calculate month number and year deterministically (1-based)
+      int year = ((payment - 1) ~/ 12) + 1;
+      int monthIndex = ((payment - 1) % 12) + 1;
       String monthName = _getMonthName(monthIndex);
 
       num interestPaid = outstandingBalance * monthlyRate;
