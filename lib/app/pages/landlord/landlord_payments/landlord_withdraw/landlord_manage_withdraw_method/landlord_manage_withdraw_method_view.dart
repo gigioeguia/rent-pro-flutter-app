@@ -83,7 +83,7 @@ class _LandlordManageWithdrawMethodViewState extends ConsumerState<LandlordManag
                           ),
                           isExpanded: true,
                           menuMaxHeight: 250,
-                          value: controller.selectedMethod,
+                          initialValue: controller.selectedMethod,
                           items: List.generate(
                             _methods.length,
                             (index) {

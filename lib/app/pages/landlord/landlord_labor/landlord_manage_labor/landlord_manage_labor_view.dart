@@ -157,7 +157,7 @@ class _LandlordManageLaborViewState extends ConsumerState<LandlordManageLaborVie
                       // labelText: 'Gender',
                       labelText: context.t.form.gender.label,
                     ),
-                    value: controller.selectedGender,
+                    initialValue: controller.selectedGender,
                     items: [
                       ...{
                         "Male": context.t.enums.gender.male,

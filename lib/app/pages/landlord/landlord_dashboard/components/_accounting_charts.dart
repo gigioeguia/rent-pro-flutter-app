@@ -106,7 +106,7 @@ class AccountingBarChart extends StatelessWidget {
                     drawVerticalLine: false,
                     getDrawingHorizontalLine: (value) {
                       return FlLine(
-                        color: _theme.colorScheme.outline.withOpacity(0.35),
+                        color: _theme.colorScheme.outline.withValues(alpha: 0.35),
                         strokeWidth: 1,
                         dashArray: [4, 8],
                       );

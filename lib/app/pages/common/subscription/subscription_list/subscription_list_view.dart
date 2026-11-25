@@ -139,7 +139,7 @@ class _SubscriptionListViewState extends ConsumerState<SubscriptionListView> {
               status: PaymentStatusViewType.custom(
                 imagePath: PaymentStatusViewType.success.imagePath,
                 // actionButtonText: 'Go Back',
-                actionButtonText: context.t.action.goBack,
+                actionButtonText: ctx.t.action.goBack,
                 title: PaymentStatusViewType.success.title,
                 description: PaymentStatusViewType.success.description,
               ),
@@ -165,11 +165,11 @@ class _SubscriptionListViewState extends ConsumerState<SubscriptionListView> {
               status: PaymentStatusViewType.custom(
                 imagePath: PaymentStatusViewType.success.imagePath,
                 // actionButtonText: "Go Back",
-                actionButtonText: context.t.action.goBack,
+                actionButtonText: ctx.t.action.goBack,
                 title: PaymentStatusViewType.success.title,
                 // description:
                 //     "Subscription payment successfully.\nYou can access the subscribed features now.",
-                description: context.t.pages.subscriptionPlan.extra.subscriptionPaymentSuccess,
+                description: ctx.t.pages.subscriptionPlan.extra.subscriptionPaymentSuccess,
               ),
             ),
           );

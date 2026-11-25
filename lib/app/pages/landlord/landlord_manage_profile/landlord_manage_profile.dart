@@ -171,7 +171,7 @@ class LandLordManageProfileFormsFields extends ConsumerWidget {
                 // labelText: 'Country',
                 labelText: context.t.form.country.label,
               ),
-              value: controller.selectedCountry,
+              initialValue: controller.selectedCountry,
               isExpanded: true,
               items: [
                 ...data.map((country) {
@@ -250,7 +250,7 @@ class LandLordManageProfileFormsFields extends ConsumerWidget {
             // labelText: 'Gender',
             labelText: context.t.form.gender.label,
           ),
-          value: controller.selectedGender,
+          initialValue: controller.selectedGender,
           items: [
             ...{
               "Male": context.t.enums.gender.male,

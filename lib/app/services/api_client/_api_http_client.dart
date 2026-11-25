@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:fdevs_fitkit/fdevs_fitkit.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:flutter/foundation.dart' show kDebugMode, debugPrint;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,7 +61,7 @@ class HTTPDioClient {
       }
       return _i;
     } catch (e, _) {
-      print('Failed to initialize HTTPDioClient: $e');
+      debugPrint('Failed to initialize HTTPDioClient: $e');
       throw Exception('HTTPDioClient initialization error');
     }
   }

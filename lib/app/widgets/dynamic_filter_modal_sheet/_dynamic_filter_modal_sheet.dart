@@ -163,7 +163,7 @@ class FilterModalData<R, T> {
           hint: hintText != null ? Text(hintText) : null,
           decoration: InputDecoration(labelText: labelText),
           menuMaxHeight: MediaQuery.of(context).size.height * 0.375,
-          value: initialValue,
+          initialValue: initialValue,
           items: items,
           onChanged: onChanged,
         );

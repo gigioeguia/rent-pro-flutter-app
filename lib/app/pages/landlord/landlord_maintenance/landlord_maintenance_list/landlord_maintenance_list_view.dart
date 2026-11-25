@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:fdevs_fitkit/fdevs_fitkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../../../../i18n/strings.g.dart';
 import '../../../../core/core.dart';

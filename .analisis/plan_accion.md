@@ -45,6 +45,7 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 | P0-7 | Configurar reporte de cobertura | workflow, `coverage/` | Reporte lcov generado y archivado |
 | P0-8 | Quality gates (fail on error) | workflow | PR bloqueado si analyze/test fallan |
 | P0-9 | Documentar comandos locales | `README.md` / `CONTRIBUTING.md` | Comandos reproducibles |
+| P0-10 | Limpiar issues de `flutter analyze` (32 infos) y CI estricto | `lib/...` (imports, prints, deprecations), `.github/workflows/ci.yml` | `flutter analyze` sin issues; CI con `flutter analyze` (fatal infos) |
 
 ### Fase 1 – Seguridad crítica (P1, 1-2 semanas)
 

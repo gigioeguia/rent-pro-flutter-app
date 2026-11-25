@@ -105,7 +105,7 @@ class OfflinePaymentView extends ConsumerWidget {
                           ),
                           isExpanded: true,
                           menuMaxHeight: 250,
-                          value: controller.selectedMethod,
+                          initialValue: controller.selectedMethod,
                           items: [
                             ..._paymentMethods.map(
                               (method) {

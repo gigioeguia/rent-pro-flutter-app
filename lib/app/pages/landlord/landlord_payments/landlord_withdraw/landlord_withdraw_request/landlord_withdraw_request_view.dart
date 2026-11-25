@@ -399,7 +399,7 @@ class _LandlordWithdrawRequestViewState extends ConsumerState<LandlordWithdrawRe
 
       showCustomSnackBar(
         ctx,
-        content: Text(_result.right?.message ?? context.t.common.requestSendSuccess),
+        content: Text(_result.right?.message ?? ctx.t.common.requestSendSuccess),
         customSnackBarType: CustomOverlayType.success,
       );
       return;

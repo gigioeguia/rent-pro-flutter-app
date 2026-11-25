@@ -246,7 +246,7 @@ class TenantProfileFormFields extends ConsumerWidget {
                 // labelText: 'Country',
                 labelText: context.t.form.country.label,
               ),
-              value: controller.selectedCountry,
+              initialValue: controller.selectedCountry,
               isExpanded: true,
               items: [
                 ...data.map((country) {
@@ -348,7 +348,7 @@ class TenantProfileFormFields extends ConsumerWidget {
                   // labelText: 'Gender',
                   labelText: context.t.form.gender.label,
                 ),
-                value: controller.selectedGender,
+                initialValue: controller.selectedGender,
                 items: [
                   ...{
                     "Male": context.t.enums.gender.male,
@@ -471,7 +471,7 @@ class TenantProfileFormFields extends ConsumerWidget {
                   label: context.t.common.relationWithYou,
                 ),
               ),
-              value: controller.ecSelectedRelation,
+              initialValue: controller.ecSelectedRelation,
               isExpanded: true,
               items: [
                 ...{
@@ -651,7 +651,7 @@ class TenantProfileFormFields extends ConsumerWidget {
                     // labelText: 'Country',
                     labelText: context.t.form.country.label,
                   ),
-                  value: controller.wSelectedCountry,
+                  initialValue: controller.wSelectedCountry,
                   isExpanded: true,
                   items: [
                     ...data.map((country) {
@@ -940,7 +940,7 @@ class VehicleFormFields extends StatelessWidget {
                     label: context.t.common.vehiclesType,
                   ),
                 ),
-                value: controller.vehicleType,
+                initialValue: controller.vehicleType,
                 isExpanded: true,
                 items: [
                   ...{

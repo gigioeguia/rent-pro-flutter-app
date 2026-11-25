@@ -67,7 +67,7 @@ class _TenantManageRefundRequestViewState extends ConsumerState<TenantManageRefu
                             ),
                           ),
                           isExpanded: true,
-                          value: controller.selectedRent,
+                          initialValue: controller.selectedRent,
                           items: List.generate(
                             _rents.length,
                             (index) {
@@ -144,7 +144,7 @@ class _TenantManageRefundRequestViewState extends ConsumerState<TenantManageRefu
                               label: context.t.common.refundReason,
                             ),
                           ),
-                          value: controller.selectedReasonId,
+                          initialValue: controller.selectedReasonId,
                           items: List.generate(
                             _reasons.length,
                             (index) {

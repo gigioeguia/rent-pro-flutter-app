@@ -280,7 +280,9 @@ class _FileField extends StatelessWidget {
         onSelectFile?.call(_file);
         state.didChange(_file);
       }
-    } catch (e) {}
+    } catch (e) {
+      // ignore: empty_catches
+    }
   }
 }
 

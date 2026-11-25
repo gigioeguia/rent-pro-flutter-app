@@ -181,7 +181,7 @@ class _LandlordMaintenanceReportViewState extends ConsumerState<LandlordMaintena
                                 ),
                               ),
                               isExpanded: true,
-                              value: filter.propertyId,
+                              initialValue: filter.propertyId,
                               items: List.generate(
                                 _properties.length,
                                 (index) {

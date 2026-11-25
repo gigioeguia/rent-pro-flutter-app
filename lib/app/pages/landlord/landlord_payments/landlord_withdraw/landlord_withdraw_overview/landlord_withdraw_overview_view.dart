@@ -219,7 +219,7 @@ class _LandlordWithdrawOverviewViewState extends State<LandlordWithdrawOverviewV
     final _result = await context.router.push(
       LandlordManageWithdrawMethodRoute(),
     );
-    print(_result);
+    debugPrint('$_result');
   }
 
   // Payout req Navigation
@@ -227,6 +227,6 @@ class _LandlordWithdrawOverviewViewState extends State<LandlordWithdrawOverviewV
     final _result = await context.router.push(
       const LandlordWithdrawRequestRoute(),
     );
-    print(_result);
+    debugPrint('$_result');
   }
 }

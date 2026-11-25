@@ -81,7 +81,7 @@ class _TenantManageMaintenanceViewState extends ConsumerState<TenantManageMainte
                             labelText: context.t.form.anyDropdown.label(label: context.t.common.propertyName),
                           ),
                           isExpanded: true,
-                          value: controller.selectedPropertyId,
+                          initialValue: controller.selectedPropertyId,
                           items: List.generate(
                             _properties.length,
                             (index) {
