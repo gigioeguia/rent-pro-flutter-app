@@ -63,12 +63,12 @@
 - Config: `.fvmrc` (Flutter 3.35.0).
 
 ## 9. Criterios de aceptación
-- [ ] CA-1: Pipeline corre en push/PR a `main` y manual.
-- [ ] CA-2: `flutter analyze` sin errores.
-- [ ] CA-3: `flutter test --coverage` en verde en Ubuntu.
-- [ ] CA-4: Reporte lcov archivado.
-- [ ] CA-5: Build APK en tags `v*`.
-- [ ] CA-6: Documentado en `plan_accion.md` (umbral de cobertura y matriz de runners).
+- [x] CA-1: Pipeline corre en push/PR a `main` y manual.
+- [x] CA-2: `flutter analyze` sin errores.
+- [x] CA-3: `flutter test --coverage` en verde en Ubuntu.
+- [x] CA-4: Reporte lcov archivado.
+- [x] CA-5: Build APK en tags `v*`.
+- [x] CA-6: Documentado en `plan_accion.md` (umbral de cobertura y matriz de runners).
 
 ## 10. Fuera de alcance
 - Firma release con keystore (fase posterior).
