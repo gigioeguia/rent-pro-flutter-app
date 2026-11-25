@@ -1,0 +1,5 @@
+interface:
+  display_name: "Spec Impl"
+  short_description: "Implements an approved spec step by step"
+policy:
+  allow_implicit_invocation: false

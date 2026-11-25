@@ -1,0 +1,5 @@
+interface:
+  display_name: "Flutter Stack Architect"
+  short_description: "Mantiene la app alineada con la pila tecnológica objetivo"
+policy:
+  allow_implicit_invocation: false

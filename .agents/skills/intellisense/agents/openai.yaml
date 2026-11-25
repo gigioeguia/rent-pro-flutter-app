@@ -1,0 +1,5 @@
+interface:
+  display_name: "IntelliSense"
+  short_description: "Fix VS Code IntelliSense for Flutter/FVM"
+policy:
+  allow_implicit_invocation: false

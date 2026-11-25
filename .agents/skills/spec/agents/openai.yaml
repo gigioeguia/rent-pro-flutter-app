@@ -1,0 +1,5 @@
+interface:
+  display_name: "Spec"
+  short_description: "Diseña specs siguiendo el método spec-driven"
+policy:
+  allow_implicit_invocation: false

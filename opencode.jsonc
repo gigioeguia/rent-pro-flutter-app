@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    ".analisis/README.md",
+    ".analisis/revision_funcional.md",
+    ".analisis/deuda_tecnologica.md",
+    ".analisis/seguridad_vulnerabilidades.md",
+    ".analisis/plan_accion.md"
+  ]
+}
