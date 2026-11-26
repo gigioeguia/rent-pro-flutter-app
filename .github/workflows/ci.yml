@@ -58,8 +58,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Setup FVM
+        run: |
+          dart pub global activate fvm
+          $HOME/.pub-cache/bin/fvm install
+
       - name: Analyze
-        run: flutter analyze --fatal-infos
+        run: $HOME/.pub-cache/bin/fvm flutter analyze --fatal-infos
 
       - name: Test
         if: matrix.os == 'ubuntu-latest'
