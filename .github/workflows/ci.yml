@@ -41,10 +41,22 @@ jobs:
           echo "Actual (flutter --version): $ACTUAL"
           test "$EXPECTED" = "$ACTUAL"
 
+      - name: Verify no signing material committed
+        run: |
+          set -e
+          if git ls-files '*.jks' '*.keystore' | grep -q .; then
+            echo "ERROR: keystore file tracked in git"
+            git ls-files '*.jks' '*.keystore'
+            exit 1
+          fi
+          if grep -n "123456789" android/app/build.gradle; then
+            echo "ERROR: weak password hardcoded in build.gradle"
+            exit 1
+          fi
+          echo "OK: no signing material committed"
+
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Analyze
         run: flutter analyze --fatal-infos
 
       - name: Test

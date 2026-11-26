@@ -5,6 +5,25 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+// CI / entornos sin key.properties pueden inyectar credenciales por env vars.
+def envStorePassword = System.getenv('ANDROID_STORE_PASSWORD')
+def envKeyPassword   = System.getenv('ANDROID_KEY_PASSWORD')
+def envKeyAlias      = System.getenv('ANDROID_KEY_ALIAS')
+def envStoreFile     = System.getenv('ANDROID_STORE_FILE')
+
+def storePassword = (keystoreProperties['storePassword'] ?: envStorePassword)
+def keyPassword   = (keystoreProperties['keyPassword']   ?: envKeyPassword)
+def keyAlias      = (keystoreProperties['keyAlias']      ?: envKeyAlias)
+def storeFileProp = (keystoreProperties['storeFile']     ?: envStoreFile)
+
+def hasCredentials = storePassword && keyPassword && keyAlias && storeFileProp
+
 android {
     namespace = "com.codeconnect.rentpro"
     compileSdk = flutter.compileSdkVersion
@@ -14,7 +33,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
@@ -32,17 +50,19 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'upload'
-            keyPassword '123456789'
-            storeFile file('rentpro.jks')
-            storePassword '123456789'
+            if (hasCredentials) {
+                keyAlias keyAlias
+                keyPassword keyPassword
+                storeFile file(storeFileProp)
+                storePassword storePassword
+            }
         }
     }
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
+            // Sin credenciales se firma con la clave debug (builds de CI/QA).
+            // NO apto para publicación en Play Store.
+            signingConfig hasCredentials ? signingConfigs.release : signingConfigs.debug
             minifyEnabled false
             shrinkResources false
         }
