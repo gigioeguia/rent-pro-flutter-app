@@ -50,7 +50,7 @@ Lint/analyzer exceptions are consolidated in `docs/analysis-exceptions.md`. Befo
 2. Add the entry to `docs/analysis-exceptions.md` (regla, tipo, motivo, archivos, plan de salida, fase).
 3. Add an inline comment in `analysis_options.yaml` when it is a global exception.
 
-`fvm flutter analyze` must report 0 issues. Strict mode (`--fatal-infos`/`--fatal-warnings`) is reserved for P0-10 and is not enabled here.
+`fvm flutter analyze` must report 0 issues. Strict mode (`--fatal-infos`) is enabled: infos, warnings and errors block PRs. See `docs/quality-gates.md` and `docs/analysis-exceptions.md`.
 
 ## Dependency overrides
 
