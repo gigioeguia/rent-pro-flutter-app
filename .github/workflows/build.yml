@@ -15,9 +15,19 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.0'
+          flutter-version-file: .fvmrc
           channel: stable
           cache: true
+          pub-cache: true
+
+      - name: Verify Flutter version matches .fvmrc
+        run: |
+          set -e
+          EXPECTED=$(python3 -c "import json,sys; print(json.load(open('.fvmrc'))['flutter'])")
+          ACTUAL=$(flutter --version | head -n 1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
+          echo "Expected (from .fvmrc): $EXPECTED"
+          echo "Actual (flutter --version): $ACTUAL"
+          test "$EXPECTED" = "$ACTUAL"
 
       - name: Install dependencies
         run: flutter pub get
