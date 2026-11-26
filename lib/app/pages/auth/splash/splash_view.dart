@@ -18,22 +18,20 @@ class SplashView extends ConsumerStatefulWidget {
 }
 
 class _SplashViewState extends ConsumerState<SplashView> {
-  Future<void> splash(void Function() callback) async {
-    if (await validatePurchaseCode(context)) {
-      return await Future.delayed(
-        const Duration(milliseconds: 1800),
-        callback,
-      );
-    }
-  }
-
   @override
   void initState() {
     super.initState();
+    // Valida la licencia y, si es válida, espera el delay de marca y navega.
+    // Se programa una sola vez en initState para evitar callbacks duplicados en rebuilds.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      splash(() {
-        if (context.mounted) {
-          context.router.replaceAll([const MuteHomeRoute()]);
+      validatePurchaseCode(context).then((isValid) {
+        if (!mounted) return;
+        if (isValid) {
+          Future.delayed(const Duration(milliseconds: 1800), () {
+            if (mounted) {
+              context.router.replaceAll([const MuteHomeRoute()]);
+            }
+          });
         }
       });
     });
@@ -58,10 +56,10 @@ class _SplashViewState extends ConsumerState<SplashView> {
   Future<bool> validatePurchaseCode(BuildContext context) async {
     try {
       final _response = await ref.read(httpDioClientProvider).restClient.get(
-            "https://api.envato.com/v3/market/author/sale?code=${AppConfig.purchaseCode}",
+            'https://api.envato.com/v3/market/author/sale?code=${AppConfig.purchaseCode}',
             options: DioOptions(
               headers: {
-                'Authorization': 'Bearer orZoxiU81Ok7kxsE0FvfraaO0vDW5tiz'
+                'Authorization': 'Bearer ${AppConfig.envatoToken}',
               },
             ),
           );

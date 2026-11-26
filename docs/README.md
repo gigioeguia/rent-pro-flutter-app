@@ -59,17 +59,15 @@ Install the following software to set up your development environment:
 ### **2.3 Installation Checklist**
 Follow these steps to verify that your environment is ready:
 
-1. **Enter Your Purchase Code<span style="color: red"> [ This is very important ]</span>**
-    - Get your purchase code from your CodeCanyon account.
-    - Replace *`YOUR_PURCHASE_CODE`* in the `lib/app/core/static/app_config/_app_config.dart`.
-    - After replacing the purchase code, it should look like this:
-      ```dart
-        // Purchase Code
-        static const String purchaseCode = 'YOUR_PURCHASE_CODE' // replace this;
-      ```
-> **Note:** Make sure to replace the placeholder with your actual purchase code.
+> **Note:** As of P1-1, the Envato token and purchase code are NOT hardcoded in source. Provide them at build time:
+> ```bash
+> fvm flutter run \
+>   --dart-define=ENVATO_TOKEN=YOUR_ENVATO_AUTHOR_TOKEN \
+>   --dart-define=PURCHASE_CODE=YOUR_PURCHASE_CODE
+> ```
+> For release builds, pass the same `--dart-define` flags to `flutter build`. Without them, license validation fails closed (the app will not start).
 
-2. **Install Flutter SDK**
+1. **Install Flutter SDK**
    - Download the Flutter SDK from the official website and extract it to your desired location (e.g., `C:\flutter` or `~/flutter`).
    - Add the Flutter `bin` directory to your system's PATH variable:
      - On Windows:
@@ -80,19 +78,19 @@ Follow these steps to verify that your environment is ready:
          export PATH="$PATH:/path/to/flutter/bin"
          ```
 
-3. **Verify Installation**
+2. **Verify Installation**
    - Open a terminal or command prompt and run:
      ```bash
      flutter doctor
      ```
    - Address any issues reported by the tool (e.g., missing dependencies, unconfigured Android SDK).
 
-4. **Set Up Your IDE**
+3. **Set Up Your IDE**
    - Configure the Flutter and Dart SDK paths in your IDE:
      - For Android Studio: Go to **File > Settings > Languages & Frameworks > Flutter** and set the Flutter SDK path.
      - For VS Code: Open the Command Palette (`Ctrl + Shift + P`), search for "Flutter: Select SDK," and select the Flutter SDK path.
 
-5. **Enable USB Debugging (For Physical Devices)**
+4. **Enable USB Debugging (For Physical Devices)**
    - On your Android device, go to **Settings > Developer Options** and enable **USB Debugging**.
    - If **Developer Options** is not visible, enable it by tapping **Build Number** 7 times in **Settings > About Phone**.
 

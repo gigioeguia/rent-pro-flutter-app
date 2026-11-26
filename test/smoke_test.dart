@@ -39,7 +39,7 @@ void main() {
       ),
     );
 
-    // Flush post-frame callback + purchase-code validation, then advance
+    // Avanza el tiempo del splash y estabiliza.
     // past the splash delay and settle the resulting navigation.
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
