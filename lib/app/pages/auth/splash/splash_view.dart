@@ -6,21 +6,37 @@ import '../../../core/static/static.dart' show DAppImages;
 import '../../../routes/app_routes.gr.dart';
 
 @RoutePage()
-class SplashView extends StatelessWidget {
+class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final _theme = Theme.of(context);
+  State<SplashView> createState() => _SplashViewState();
 
-    // Programa el delay de marca y la navegación tras el primer frame.
+  static Future<void> splash(
+    BuildContext context,
+    void Function() callback,
+  ) async {
+    await Future.delayed(const Duration(milliseconds: 1800), callback);
+  }
+}
+
+class _SplashViewState extends State<SplashView> {
+  @override
+  void initState() {
+    super.initState();
+    // Programa el delay de marca y la navegación una sola vez (no en build).
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      splash(context, () {
-        if (context.mounted) {
+      SplashView.splash(context, () {
+        if (mounted) {
           context.router.replaceAll([const MuteHomeRoute()]);
         }
       });
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: _theme.colorScheme.primary,
@@ -32,12 +48,5 @@ class SplashView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  static Future<void> splash(
-    BuildContext context,
-    void Function() callback,
-  ) async {
-    await Future.delayed(const Duration(milliseconds: 1800), callback);
   }
 }

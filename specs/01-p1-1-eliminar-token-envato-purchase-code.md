@@ -31,7 +31,7 @@
 
 - RF-1: `AppConfig` no declara `purchaseCode` ni su comentario.
 - RF-2: `SplashView` no referencia la URL de Envato, el token de autor ni `AppConfig.purchaseCode`.
-- RF-3: `SplashView` deja de ser `ConsumerStatefulWidget` y pasa a `StatelessWidget` (elimina la dependencia muerta de `httpDioClientProvider`).
+- RF-3: `SplashView` deja de ser `ConsumerStatefulWidget` y pasa a `StatefulWidget` (no `Consumer`), eliminando la dependencia muerta de `httpDioClientProvider` y programando la navegación una sola vez en `initState`.
 - RF-4: El método `splash(callback)` conserva el delay de 1800 ms y luego invoca `callback`, verificando `context.mounted` antes de navegar.
 - RF-5: No se muestra `InfoDialog` de "Invalid Purchase Code" (validación eliminada).
 - RF-6: No quedan imports huérfanos en `splash_view.dart` (`flutter analyze` 0 issues).
@@ -81,7 +81,7 @@
 - [x] CA-1: `grep -R "purchaseCode" lib/` devuelve 0 coincidencias.
 - [x] CA-2: El token de autor de Envato no aparece en ningún archivo versionado (verificado por secret scanning; solo existía en código y ahora está eliminado).
 - [x] CA-3: `grep -R "api.envato.com" lib/` devuelve 0 coincidencias (idem).
-- [x] CA-4: `SplashView` es `StatelessWidget` (verificable por inspección).
+- [x] CA-4: `SplashView` es `StatefulWidget` (no `Consumer`) y programa la navegación una sola vez en `initState` (verificable por inspección).
 - [x] CA-5: `fvm flutter analyze` reporta 0 issues.
 - [x] CA-6: `fvm flutter test` en verde (26/26, incluye `test/smoke_test.dart`).
 - [x] CA-7: El comentario de `test/smoke_test.dart` ya no menciona la validación de purchase code.
@@ -131,27 +131,35 @@ abstract class AppConfig {
 import 'package:auto_route/auto_route.dart';
 import 'package:fdevs_fitkit/fdevs_fitkit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../routes/app_routes.gr.dart';
 import '../../../core/static/static.dart' show DAppImages;
+import '../../../routes/app_routes.gr.dart';
 
 @RoutePage()
-class SplashView extends StatelessWidget {
+class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final _theme = Theme.of(context);
+  State<SplashView> createState() => _SplashViewState();
+}
 
-    // Programa el delay de marca y la navegación tras el primer frame.
+class _SplashViewState extends State<SplashView> {
+  @override
+  void initState() {
+    super.initState();
+    // Programa el delay de marca y la navegación una sola vez (no en build).
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      splash(context, () {
-        if (context.mounted) {
+      SplashView.splash(context, () {
+        if (mounted) {
           context.router.replaceAll([const MuteHomeRoute()]);
         }
       });
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: _theme.colorScheme.primary,
@@ -165,13 +173,16 @@ class SplashView extends StatelessWidget {
     );
   }
 
-  static Future<void> splash(BuildContext context, void Function() callback) async {
+  static Future<void> splash(
+    BuildContext context,
+    void Function() callback,
+  ) async {
     await Future.delayed(const Duration(milliseconds: 1800), callback);
   }
 }
 ```
 
-> Nota: si `WidgetsBinding.instance.addPostFrameCallback` dentro de `build` resulta problemático (se registra en cada rebuild), alternativa: mantener `ConsumerStatefulWidget` solo para `initState`. La decisión Q3 favoreció `StatelessWidget`; si el implementador detecta un rebuild loop, puede revertir a `StatefulWidget` (no `Consumer`) manteniendo el resto del spec. Registrar la decisión en el commit.
+> Nota: la navegación se programa en `initState` para evitar callbacks duplicados en rebuilds. Se descartó `StatelessWidget` por ese motivo.
 
 **`test/smoke_test.dart`** (solo comentario, línea ~42):
 
