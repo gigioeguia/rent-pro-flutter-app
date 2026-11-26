@@ -9,6 +9,10 @@ on:
 env:
   COVERAGE_THRESHOLD: '2'
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   analyze-and-test:
     strategy:
@@ -60,3 +64,16 @@ jobs:
           if-no-files-found: ignore
 
       # iOS build movido a .github/workflows/ios-build.yml (manual/tags)
+
+  quality-gate:
+    name: quality-gate
+    needs: [analyze-and-test]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Verify all jobs succeeded
+        run: |
+          if [ "${{ needs.analyze-and-test.result }}" != "success" ]; then
+            echo "analyze-and-test failed: ${{ needs.analyze-and-test.result }}"
+            exit 1
+          fi
