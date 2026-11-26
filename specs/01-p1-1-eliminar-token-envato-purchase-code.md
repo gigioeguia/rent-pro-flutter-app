@@ -176,5 +176,5 @@ class SplashView extends StatelessWidget {
 **`test/smoke_test.dart`** (solo comentario, línea ~42):
 
 ```dart
-// Avanza el tiempo del splash (sin validación de purchase code) y estabiliza.
+// Avanza el tiempo del splash y estabiliza.
 ```
