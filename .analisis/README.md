@@ -15,4 +15,16 @@ Documentos de análisis del proyecto Rent Pro:
 - Skill `intellisense` (`.agents/skills/intellisense`): diagnóstico y corrección de sugerencias/warnings de Dart/Flutter analyzer.
 - Skill `spec` (`.agents/skills/spec`): diseña specs siguiendo el método spec-driven; pregunta antes de estructurar y construye sección por sección. Incluye `template.md`.
 - Skill `spec-impl` (`.agents/skills/spec-impl`): implementa una spec aprobada (rama + pasos).
+## Estado actual (2026-11-26)
+
+- **Fase 0 cerrada:** CI activo, `flutter analyze` 0 issues, `flutter test` 26/26 verde, cobertura 2.4% (umbral 2%).
+- Pendiente manual: configurar branch protection en GitHub (`quality-gate` required) — ver `docs/quality-gates.md`.
+
+## Artefactos de implementación
+
+- `specs/00-p0-*.md`: specs de las tareas P0-1 a P0-11 (todas implementadas, acceptance criteria marcados).
+- `docs/`: coverage, quality-gates, analysis-exceptions, dependency-overrides, README de personalización.
+- `AGENTS.md` (raíz): contexto y convenciones para agentes de codificación.
+- `.github/workflows/`: `ci.yml`, `build.yml`, `ios-build.yml`.
+
 Usar estos documentos como contexto antes de proponer cambios o implementar correcciones.

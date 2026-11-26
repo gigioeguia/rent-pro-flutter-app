@@ -36,6 +36,12 @@ fvm flutter test      # must pass
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full, reproducible command reference (setup, daily development, codegen, tests/coverage, builds, cleanup, customization, and Make targets).
 
+## Project status
+
+- **Fase 0 (CI/CD, excepciones, tests base): ✅ cerrada** (2026-11-26). Baseline: `flutter analyze` 0 issues, `flutter test` 26/26 verde, cobertura 2.4% (umbral 2%).
+- Pipeline CI activo (`.github/workflows/ci.yml`): analyze + test + coverage + quality gate en PRs a `main`.
+- Siguiente fase: Fase 1 (seguridad crítica). Ver [`.analisis/plan_accion.md`](.analisis/plan_accion.md).
+
 ## Project docs
 
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) — toolchain, setup, commands, analysis exceptions, dependency overrides, coverage.
@@ -45,6 +51,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full, reproducible command refe
 - [`docs/analysis-exceptions.md`](docs/analysis-exceptions.md) — analyzer exceptions registry.
 - [`docs/dependency-overrides.md`](docs/dependency-overrides.md) — dependency overrides registry.
 - [`.analisis/plan_accion.md`](.analisis/plan_accion.md) — remediation action plan.
+- [`AGENTS.md`](AGENTS.md) — context and conventions for AI coding agents.
 
 ## License
 
