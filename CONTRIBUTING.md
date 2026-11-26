@@ -42,6 +42,16 @@ fvm flutter build apk --release
 3. Update `pubspec.yaml` `environment.sdk` if needed.
 4. Open a PR; CI reads the version from `.fvmrc` and verifies it matches.
 
+## Analysis exceptions
+
+Lint/analyzer exceptions are consolidated in `docs/analysis-exceptions.md`. Before adding a new `// ignore:` or disabling a lint in `analysis_options.yaml`:
+
+1. Justify it in the PR (motivo + plan de salida).
+2. Add the entry to `docs/analysis-exceptions.md` (regla, tipo, motivo, archivos, plan de salida, fase).
+3. Add an inline comment in `analysis_options.yaml` when it is a global exception.
+
+`flutter analyze` must report 0 issues. Strict mode (`--fatal-infos`/`--fatal-warnings`) is reserved for P0-10 and is not enabled here.
+
 ## Notes
 
 - CI (`.github/workflows/`) reads the version from `.fvmrc` via `flutter-version-file`. No hardcoded versions.
