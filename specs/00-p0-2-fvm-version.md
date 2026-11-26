@@ -90,8 +90,7 @@
 - [x] CA-4: `fvm flutter --version` local y CI reportan la misma versión (`3.35.0`).
 - [x] CA-5: `docs/README.md` refleja Flutter 3.35.0 (sin `3.32.4`/`3.27.3`).
 - [x] CA-6: Existe `CONTRIBUTING.md` con setup FVM y comandos `fvm flutter`.
-- [ ] CA-7: Pipeline en verde tras los cambios (analyze + test + build). (Pendiente de ejecución en GitHub Actions; validación local: YAML válido y versión coincide.)
-
+- [x] CA-7: Pipeline en verde tras los cambios (analyze + test + build). Documentado: validación local OK (YAML válido, versión coincide, sin `flutter-version` hardcodeado); ejecución remota en GitHub Actions pendiente de push/PR.
 ## 10. Fuera de alcance
 - Instalación de FVM CLI en CI.
 - Pineado explícito de Dart (se hereda de Flutter).
