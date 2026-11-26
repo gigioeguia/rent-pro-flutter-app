@@ -81,8 +81,12 @@ flutter_launcher_icons:
   image_path: "assets/icons/app_icon.png"
   min_sdk_android: 21
 
+# Overrides documentados en docs/dependency-overrides.md
+# Nota: pubspec_overrides.yaml tiene precedencia sobre esta sección.
 dependency_overrides:
+  # Posiblemente inactivo mientras exista pubspec_overrides.yaml; a confirmar en P0-11.
   intl: ^0.18.1
+  # Override redundante (igual a la dependencia); posiblemente inactivo.
   collection: ^1.19.1
   
 flutter:
