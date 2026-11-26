@@ -686,6 +686,44 @@ To test your app on mobile devices, follow these steps:
 
 ---
 
+### **6.3.5 Android release signing and key rotation (P1-2)**
+
+Release signing is configured conditionally. No password or keystore is committed.
+
+Resolution order for credentials:
+1. `android/key.properties` (gitignored) if it exists.
+2. Environment variables `ANDROID_STORE_PASSWORD`, `ANDROID_KEY_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_STORE_FILE`.
+3. If none are present, the release build is signed with the debug key (CI/QA only, not publishable).
+
+Steps:
+1. Generate a new keystore outside the repo:
+   ```bash
+   keytool -genkey -v \\
+     -keystore ~/upload-keystore.jks \\
+     -keyalg RSA -keysize 2048 -validity 10000 \\
+     -alias upload
+   ```
+   Use a strong password (>= 16 characters).
+2. Create `android/key.properties` (gitignored) from the template `android/key.properties.example`:
+   ```properties
+   storePassword=<strong-password>
+   keyPassword=<strong-password>
+   keyAlias=upload
+   storeFile=../upload-keystore.jks
+   ```
+3. (Optional, CI) base64-encode the keystore and configure GitHub secrets
+   `ANDROID_KEYSTORE_BASE64`, `ANDROID_STORE_PASSWORD`, `ANDROID_KEY_PASSWORD`,
+   `ANDROID_KEY_ALIAS`, then enable the commented steps in `.github/workflows/build.yml`.
+4. Verify:
+   ```bash
+   git ls-files '*.jks' '*.keystore'   # must be empty
+   fvm flutter build apk --release
+   ```
+
+Rotation: generate a new keystore, update `key.properties`/secrets, discard the old
+`rentpro.jks` (already removed from the working tree). The old key was exposed in
+git history; rotating requires discarding that material.
+
 ### **6.4 Preparing for Release**
 
 Before releasing your app, ensure it is thoroughly tested and optimized.
