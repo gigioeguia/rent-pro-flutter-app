@@ -1,6 +1,6 @@
 # SPEC 00 — Modo estricto de análisis (P0-10)
 
-> **Status:** Draft
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (P0-1), SPEC 00 (P0-2), SPEC 00 (P0-3), SPEC 00 (P0-8)
 > **Date:** 2026-11-26
 > **Objective:** Activar `--fatal-infos` en CI y documentar el modo estricto, verificando que `flutter analyze` reporta 0 issues bajo el SDK fijado (FVM 3.35.0).

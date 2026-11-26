@@ -52,6 +52,6 @@ Inventario de los ignores inline existentes en `lib/` (excluyendo archivos gener
 
 ## 5. Relación con otras fases
 
-- P0-10: activará `--fatal-infos`/`--fatal-warnings` y limpiará los infos; este registro servirá de base.
+- P0-10: implementado. Modo estricto (`--fatal-infos`) activo en CI; este registro es la base para justificar futuras excepciones.
 - P4: refactor progresivo para eliminar la excepción global y los ignores inline.
 - P5: modernización de dependencias (puede introducir nuevos ignores que deben registrarse aquí).

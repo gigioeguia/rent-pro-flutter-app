@@ -14,7 +14,7 @@ Este job se ejecuta siempre (`if: always()`) y falla si `analyze-and-test.result
 
 | Step | Condición de fallo | Bloquea PR |
 |------|-------------------|------------|
-| `Analyze` | `flutter analyze` reporta errores (infos/warnings no son fatales hasta P0-10) | Sí |
+| `Analyze` | `flutter analyze --fatal-infos` reporta errores o infos (warnings/errores ya son fatales por defecto) | Sí |
 | `Test` | Algún test falla | Sí |
 | `Coverage check` | Cobertura < `COVERAGE_THRESHOLD` (actual 2%) | Sí |
 | `Upload coverage` | Fallo al subir el artefacto | No (fuera del gate) |
@@ -35,7 +35,7 @@ Estos pasos se realizan en GitHub (Settings → Branches → Branch protection r
 
 ## Relación con otras fases
 
-- P0-10: activará `--fatal-infos`/`--fatal-warnings` en `flutter analyze`; este documento se actualizará para reflejar el modo estricto.
+- P0-10: implementado. `flutter analyze --fatal-infos` está activo; infos, warnings y errores bloquean PRs. El registro de excepciones (`docs/analysis-exceptions.md`) es la base para futuras excepciones.
 - P0-7: define el umbral de cobertura y el ratchet (2% → 3% → 10% → 30% → 60%).
 - P0-1/P0-2: base del CI y versión de Flutter (`.fvmrc`).
 
