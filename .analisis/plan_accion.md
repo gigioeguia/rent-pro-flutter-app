@@ -46,6 +46,7 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 | P0-8 | Quality gates (fail on error) | workflow | PR bloqueado si analyze/test fallan |
 | P0-9 | Documentar comandos locales | `README.md` / `CONTRIBUTING.md` | Comandos reproducibles |
 | P0-10 | Limpiar issues de `flutter analyze` (32 infos) y CI estricto | `lib/...` (imports, prints, deprecations), `.github/workflows/ci.yml` | `flutter analyze` sin issues; CI con `flutter analyze` (fatal infos) |
+| P0-11 | Documentar riesgo de reproducibilidad de dependencias git/overrides (no bloqueante para P0-2) | `pubspec.yaml`, `pubspec_overrides.yaml`, `specs/00-p0-2-fvm-version.md` | Riesgo documentado en spec P0-2 (sección 10/11); sin corrección en esta fase |
 
 ### Fase 1 – Seguridad crítica (P1, 1-2 semanas)
 

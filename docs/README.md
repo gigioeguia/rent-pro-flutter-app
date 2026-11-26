@@ -34,7 +34,7 @@ To run and customize this Flutter app, your system must meet the following minim
 Install the following software to set up your development environment:
 
 1. **Flutter & Dart SDK**
-   - Version: Flutter 3.32.4 (or higher, if compatible).
+   - Version: Flutter 3.35.0 (pinned via FVM; see CONTRIBUTING.md).
    - Download Link: [Flutter SDK Archive](https://docs.flutter.dev/release/archive).
    - Installation Guide: [Official Flutter Installation Guide](https://flutter.dev/docs/get-started/install).
 
@@ -109,7 +109,7 @@ Now that you know the prerequisites, follow these steps to set up your developme
 
 ### **3.1 Installing Flutter**
 1. **Download Flutter SDK**
-   - Download Flutter 3.27.3 from the official Flutter SDK Archive: [Flutter SDK Archive](https://docs.flutter.dev/release/archive).
+   - Download Flutter 3.35.0 from the official Flutter SDK Archive: [Flutter SDK Archive](https://docs.flutter.dev/release/archive).
 2. **Extract the Flutter SDK**
    - Extract the downloaded file to your desired installation directory (e.g., `C:\flutter` or `~/flutter`).
    - Avoid locations like `C:\Program Files` to prevent permission issues.
