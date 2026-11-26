@@ -94,11 +94,11 @@
 ## 10. Fuera de alcance
 - Instalación de FVM CLI en CI.
 - Pineado explícito de Dart (se hereda de Flutter).
-- Reproducibilidad de dependencias git/overrides (`searchfield`, `country_code_picker`, `stylish_bottom_bar`) — se documenta como riesgo, no se corrige aquí.
+- Reproducibilidad de dependencias git/overrides (`searchfield`, `country_code_picker`, `stylish_bottom_bar`) — documentada en detalle en `specs/00-p0-11-reproducibility-risk.md` (P0-11); no se corrige aquí.
 - Firma release y despliegue (fases posteriores).
 
 ## 11. Riesgos y dependencias
-- Riesgo: dependencias git desde `master` pueden romper `flutter pub get` en CI → mitigar con cache y pinning en un item posterior.
+- Riesgo: dependencias git desde `master`/`main`/`fix-issue-248` pueden romper `flutter pub get` en CI → mitigar con cache y pinning (documentado en `specs/00-p0-11-reproducibility-risk.md`, P0-11; implementación en P5).
 - Riesgo: cambios en `.fvmrc` sin actualizar `pubspec.yaml` sdk constraint → mitigar con revisión en PR.
 - Dependencia: `subosito/flutter-action@v2` soporta `flutter-version-file` (validado en docs oficiales).
 - Dependencia: SPEC 00 (P0-1) implementado (workflows base existentes).
