@@ -21,7 +21,7 @@ Complementa `analysis_options.yaml` y debe mantenerse sincronizado con él.
 
 ## 3. Ignores inline (`// ignore:`)
 
-Inventario de los ignores inline existentes en `lib/` (excluyendo archivos generados). No se modifican en esta fase; se documentan para trazabilidad y para la futura activación de modo estricto (P0-10).
+Inventario de los ignores inline existentes en `lib/` (excluyendo archivos generados). No se modifican en esta fase; se documentan para trazabilidad. El modo estricto (`--fatal-infos`) está activo desde P0-10.
 
 | Regla | Cantidad | Archivos afectados | Motivo típico | Plan de salida | Fase |
 |-------|----------|--------------------|---------------|----------------|------|
