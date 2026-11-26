@@ -192,15 +192,15 @@
   ```
 
 ## 9. Criterios de aceptación
-- [ ] CA-1: Existe `README.md` en la raíz con quickstart y enlaces.
-- [ ] CA-2: `CONTRIBUTING.md` contiene la referencia completa de comandos locales (todas las categorías).
-- [ ] CA-3: Todos los comandos documentados usan `fvm` (salvo los globales justificados).
-- [ ] CA-4: `makefile` usa `fvm` en todos los targets.
-- [ ] CA-5: Los comandos documentados coinciden con `.github/workflows/ci.yml`.
-- [ ] CA-6: `fvm flutter analyze` reporta 0 issues tras los cambios.
-- [ ] CA-7: `fvm flutter test` pasa en verde tras los cambios.
-- [ ] CA-8: `make coverage` ejecuta correctamente (umbral 2%).
-- [ ] CA-9: No se modificó código de producción ni dependencias.
+- [x] CA-1: Existe `README.md` en la raíz con quickstart y enlaces.
+- [x] CA-2: `CONTRIBUTING.md` contiene la referencia completa de comandos locales (todas las categorías).
+- [x] CA-3: Todos los comandos documentados usan `fvm` (salvo los globales justificados).
+- [x] CA-4: `makefile` usa `fvm` en todos los targets.
+- [x] CA-5: Los comandos documentados coinciden con `.github/workflows/ci.yml`.
+- [x] CA-6: `fvm flutter analyze` reporta 0 issues tras los cambios.
+- [x] CA-7: `fvm flutter test` pasa en verde tras los cambios.
+- [x] CA-8: `make coverage` ejecuta correctamente (umbral 2%).
+- [x] CA-9: No se modificó código de producción ni dependencias.
 
 ## 10. Fuera de alcance
 - `.vscode/tasks.json` y configuración de IDE más allá de lo existente (evaluar en P4/P5).
