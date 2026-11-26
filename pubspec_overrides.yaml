@@ -1,8 +1,12 @@
+# Overrides externos documentados en docs/dependency-overrides.md
+# Pin a commit/tag en P0-11 para mejorar reproducibilidad.
 dependency_overrides:
+  # Fork con fix no publicado en pub.dev.
   searchfield:
     git:
       url: https://github.com/iamtoricool/searchfield.git
       ref: fix-issue-248
+  # Fork con cambios no publicados.
   country_code_picker:
     git:
       url: https://github.com/mdshakilmia22/CountryCodePicker.git

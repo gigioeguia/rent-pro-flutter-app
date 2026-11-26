@@ -52,6 +52,16 @@ Lint/analyzer exceptions are consolidated in `docs/analysis-exceptions.md`. Befo
 
 `flutter analyze` must report 0 issues. Strict mode (`--fatal-infos`/`--fatal-warnings`) is reserved for P0-10 and is not enabled here.
 
+## Dependency overrides
+
+Overrides are consolidated in `docs/dependency-overrides.md`. Before adding or changing an override in `pubspec.yaml` or `pubspec_overrides.yaml`:
+
+1. Justify it in the PR (motivo + plan de salida).
+2. Register it in `docs/dependency-overrides.md`.
+3. Add inline comments in the corresponding file.
+
+Remember that `pubspec_overrides.yaml` takes precedence over `dependency_overrides` in `pubspec.yaml`.
+
 ## Notes
 
 - CI (`.github/workflows/`) reads the version from `.fvmrc` via `flutter-version-file`. No hardcoded versions.
