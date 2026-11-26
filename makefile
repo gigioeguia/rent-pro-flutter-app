@@ -1,23 +1,23 @@
 .PHONY: clean build watch apk lang dev coverage coverage-check
 
 clean: 
-	flutter clean
+	fvm flutter clean
 
 build: 
-	dart run build_runner build --delete-conflicting-outputs
+	fvm dart run build_runner build --delete-conflicting-outputs
 
 watch: 
-	dart run build_runner watch --delete-conflicting-outputs
+	fvm dart run build_runner watch --delete-conflicting-outputs
 
 apk: 
-	flutter clean && flutter build apk --release
+	fvm flutter clean && fvm flutter build apk --release
 
 lang: 
-	dart run slang
+	fvm dart run slang
 
 dev: clean build lang
 
-# Cobertura (P0-7). Umbral inicial 3%; ratchet: 10% -> 30% -> 60%.
+# Cobertura (P0-7). Umbral inicial 2%; ratchet: 3% -> 10% -> 30% -> 60%.
 COVERAGE_THRESHOLD ?= 2
 
 coverage:

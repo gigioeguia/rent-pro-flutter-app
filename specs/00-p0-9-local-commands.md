@@ -1,6 +1,6 @@
 # SPEC 00 — Documentar comandos locales (P0-9)
 
-> **Status:** Draft
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (P0-1), SPEC 00 (P0-2)
 > **Date:** 2026-11-26
 > **Objective:** Establecer un punto de entrada reproducible para desarrolladores (README raíz + CONTRIBUTING) y dejar el makefile consistente con FVM, de modo que cualquier comando documentado se pueda ejecutar sin ambigüedad.
