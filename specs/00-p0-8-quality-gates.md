@@ -1,6 +1,6 @@
 # SPEC 00 — Quality gates (fail on error) (P0-8)
 
-> **Status:** Draft
+> **Status:** Implemented
 > **Depends on:** SPEC 00 (P0-1), SPEC 00 (P0-2), SPEC 00 (P0-7)
 > **Date:** 2026-11-26
 > **Objective:** Garantizar que cualquier fallo en `flutter analyze`, `flutter test` o el umbral de cobertura bloquee el merge de un PR a `main`, exponiendo un único check estable (`quality-gate`) y documentando la configuración manual de protección de rama.
@@ -107,15 +107,15 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: `ci.yml` incluye job `quality-gate` con `needs: [analyze-and-test]`.
-- [ ] CA-2: `quality-gate` falla si `analyze-and-test.result != success`.
-- [ ] CA-3: Existe bloque `concurrency` con cancelación en PRs.
-- [ ] CA-4: Ningún step crítico tiene `continue-on-error: true`.
-- [ ] CA-5: Existe `docs/quality-gates.md` con checks requeridos y checklist de branch protection.
-- [ ] CA-6: Existe `.github/pull_request_template.md` con checklist.
-- [ ] CA-7: `flutter analyze` sigue sin `--fatal-infos`/`--fatal-warnings`.
-- [ ] CA-8: `flutter analyze` reporta 0 issues tras los cambios.
-- [ ] CA-9: `flutter test` sigue en verde.
+- [x] CA-1: `ci.yml` incluye job `quality-gate` con `needs: [analyze-and-test]`.
+- [x] CA-2: `quality-gate` falla si `analyze-and-test.result != success`.
+- [x] CA-3: Existe bloque `concurrency` con cancelación en PRs.
+- [x] CA-4: Ningún step crítico tiene `continue-on-error: true`.
+- [x] CA-5: Existe `docs/quality-gates.md` con checks requeridos y checklist de branch protection.
+- [x] CA-6: Existe `.github/pull_request_template.md` con checklist.
+- [x] CA-7: `flutter analyze` sigue sin `--fatal-infos`/`--fatal-warnings`.
+- [x] CA-8: `flutter analyze` reporta 0 issues tras los cambios.
+- [x] CA-9: `flutter test` sigue en verde.
 
 ## 10. Fuera de alcance
 
