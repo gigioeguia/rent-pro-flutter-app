@@ -18,7 +18,9 @@ Reducir riesgo de seguridad, estabilizar flujos críticos y mejorar mantenibilid
 
 ## Fases
 
-### Fase 0 – CI/CD, excepciones documentadas y tests base (P0, 1-2 semanas)
+### Fase 0 – CI/CD, excepciones documentadas y tests base (P0, 1-2 semanas) ✅ CERRADA
+
+**Estado:** Completada el 2026-11-26. Baseline verificado: `flutter analyze` 0 issues, `flutter test` 26/26 verde, cobertura 2.4% (umbral 2%).
 
 Objetivo: establecer pipeline reproducible, documentar excepciones y tener una base de tests estable antes de tocar código de producción.
 
@@ -140,4 +142,4 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 
 ## Próximo paso
 
-Ejecutar Fase 0 (CI + tests base) y luego Fase 1 (seguridad crítica).
+Fase 0 cerrada. Iniciar Fase 1 (seguridad crítica). Pendiente manual: configurar branch protection en GitHub (marcar `quality-gate` como required) según `docs/quality-gates.md`.
