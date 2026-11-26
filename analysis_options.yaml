@@ -6,8 +6,13 @@ formatter:
 
 analyzer:
   errors:
+    # Código legacy usa identificadores locales con guion bajo inicial.
+    # Plan de salida: refactor progresivo (P4). Ver docs/analysis-exceptions.md.
     no_leading_underscores_for_local_identifiers: ignore
   exclude:
     - build/**
     - android/**
     - ios/**
+    # Archivos generados por slang y auto_route; no se editan manualmente.
+    - '**/*.g.dart'
+    - '**/*.gr.dart'
