@@ -1,4 +1,5 @@
 export 'api_client/_api_http_client.dart';
+export 'secure_storage/_secure_storage_service.dart';
 export 'global_overlay/_global_overlay.dart';
 export 'language_service/_locale_service.dart';
 export 'currency_service/_currency_service.dart';

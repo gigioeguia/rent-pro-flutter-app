@@ -72,6 +72,10 @@ class UserRepository extends AsyncNotifier<User?> {
   }
   //--------------------------------Sign In--------------------------------//
 
+  void clearUser() {
+    state = const AsyncValue.data(null);
+  }
+
   //--------------------------------Sign Out--------------------------------//
   Future<Either<String?, String?>> signOut() async {
     try {
@@ -80,8 +84,10 @@ class UserRepository extends AsyncNotifier<User?> {
         options: DioOptions(headers: httpClient.getAuthHeader),
       );
       if (_response.statusCode == HttpStatus.ok) {
+        await httpClient.clearToken();
+        await httpClient.secureStorage.delete(SecureStorageService.userEmail);
+        await httpClient.secureStorage.delete(SecureStorageService.userPassword);
         state = const AsyncValue.data(null);
-        await httpClient.prefs.remove(DAppSPrefsKeys.authToken);
         return Either.success(_response.data?['message'] ?? '');
       }
     } on DioException catch (e) {
@@ -128,10 +134,6 @@ class UserRepository extends AsyncNotifier<User?> {
     /// If [saveToken] `null`, Does nothing. if `true` then overrides with saving to prefs. if `false` just overrides
     bool? saveToken,
   }) async {
-    if (saveToken == true) {
-      await httpClient.prefs.remove(DAppSPrefsKeys.authToken);
-    }
-
     try {
       final _response = await httpClient.restClient.post(
         DAPIEndpoints.submitotp,

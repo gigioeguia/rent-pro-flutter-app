@@ -32,7 +32,16 @@ class SignInViewNotifier extends ChangeNotifier {
     );
 
     if (_result.isSuccess) {
-      if (rememberMe) await handleRememberMe(false);
+      if (rememberMe) {
+        await handleRememberMe(false);
+      } else {
+        await signinProvider.httpClient.secureStorage.delete(
+          SecureStorageService.userEmail,
+        );
+        await signinProvider.httpClient.secureStorage.delete(
+          SecureStorageService.userPassword,
+        );
+      }
 
       return Either.success('Signed in successfully');
     }
@@ -41,26 +50,18 @@ class SignInViewNotifier extends ChangeNotifier {
   }
 
   Future<bool> handleRememberMe([bool recover = true]) async {
-    final _prefs = signinProvider.httpClient.prefs;
+    final _secure = signinProvider.httpClient.secureStorage;
 
     if (recover) {
-      emailController.text = _prefs.getString(DAppSPrefsKeys.userEmail) ?? '';
-      passwordController.text = _prefs.getString(
-            DAppSPrefsKeys.userPassword,
-          ) ??
-          '';
+      emailController.text =
+          await _secure.read(SecureStorageService.userEmail) ?? '';
+      passwordController.text =
+          await _secure.read(SecureStorageService.userPassword) ?? '';
       return true;
     }
-    final _savedEmail = await _prefs.setString(
-      DAppSPrefsKeys.userEmail,
-      emailController.text,
-    );
-    final _savedPassword = await _prefs.setString(
-      DAppSPrefsKeys.userPassword,
-      passwordController.text,
-    );
-
-    return _savedEmail && _savedPassword;
+    await _secure.write(SecureStorageService.userEmail, emailController.text);
+    await _secure.write(SecureStorageService.userPassword, passwordController.text);
+    return true;
   }
 }
 

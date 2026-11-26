@@ -14,7 +14,10 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
 
-    final client = HTTPDioClient.initClient(prefs: prefs);
+    final client = await HTTPDioClient.initClient(
+      prefs: prefs,
+      secureStorage: SecureStorageService.memory(),
+    );
     final mockDio = Dio();
     mockDio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
