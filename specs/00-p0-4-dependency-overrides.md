@@ -90,13 +90,13 @@
 
 ## 10. Fuera de alcance
 - Eliminación o cambio de overrides (P0-11/P5).
-- Documentación detallada de dependencias git no override (ej. `stylish_bottom_bar`) — P0-11.
+- Documentación detallada de dependencias git no override (ej. `stylish_bottom_bar`) — ver `specs/00-p0-11-reproducibility-risk.md` (P0-11).
 - Checks automatizados en CI para validar documentación.
 - Upgrades de dependencias (P5).
 
 ## 11. Riesgos y dependencias
 - Riesgo: `pubspec_overrides.yaml` anula los overrides de `pubspec.yaml`, generando confusión sobre cuáles están activos → mitigar documentando precedencia.
-- Riesgo: refs git mutables (`main`, `master`, `fix-issue-248`) rompen reproducibilidad → mitigar pinneando commits (P0-11).
+- Riesgo: refs git mutables (`main`, `master`, `fix-issue-248`) rompen reproducibilidad → mitigar pinneando commits (ver `specs/00-p0-11-reproducibility-risk.md`, P0-11; implementación en P5).
 - Riesgo: forks git pueden desaparecer → mitigar documentando origen y plan de salida.
 - Dependencia: SPEC 00 (P0-1) implementado (CI base).
 
