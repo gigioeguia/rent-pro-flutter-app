@@ -62,6 +62,17 @@ Overrides are consolidated in `docs/dependency-overrides.md`. Before adding or c
 
 Remember that `pubspec_overrides.yaml` takes precedence over `dependency_overrides` in `pubspec.yaml`.
 
+## Coverage
+
+Coverage is generated with `flutter test --coverage` and verified with `tool/coverage_report.dart` (see `docs/coverage.md`).
+
+```bash
+make coverage          # run tests + coverage check (threshold 2%)
+make coverage-check    # verify an existing lcov.info
+```
+
+The initial threshold is 2% (baseline 2.4%). It increases via the ratchet plan documented in `docs/coverage.md` (2% -> 3% -> 10% -> 30% -> 60%).
+
 ## Notes
 
 - CI (`.github/workflows/`) reads the version from `.fvmrc` via `flutter-version-file`. No hardcoded versions.
