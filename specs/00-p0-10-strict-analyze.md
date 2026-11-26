@@ -82,15 +82,15 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: CI step `Analyze` usa `flutter analyze --fatal-infos`.
-- [ ] CA-2: No se usa `--fatal-warnings` ni `--fatal-all` de forma explícita.
-- [ ] CA-3: `fvm flutter analyze --fatal-infos` reporta 0 issues.
-- [ ] CA-4: `fvm flutter test` en verde.
-- [ ] CA-5: `CONTRIBUTING.md` actualizado (modo estricto activo).
-- [ ] CA-6: `docs/quality-gates.md` actualizado.
-- [ ] CA-7: `docs/analysis-exceptions.md` actualizado.
-- [ ] CA-8: Sin cambios en `lib/` ni en `test/`.
-- [ ] CA-9: `quality-gate` en verde en CI.
+- [x] CA-1: CI step `Analyze` usa `flutter analyze --fatal-infos`.
+- [x] CA-2: No se usa `--fatal-warnings` ni `--fatal-all` de forma explícita.
+- [x] CA-3: `fvm flutter analyze --fatal-infos` reporta 0 issues.
+- [x] CA-4: `fvm flutter test` en verde.
+- [x] CA-5: `CONTRIBUTING.md` actualizado (modo estricto activo).
+- [x] CA-6: `docs/quality-gates.md` actualizado.
+- [x] CA-7: `docs/analysis-exceptions.md` actualizado.
+- [x] CA-8: Sin cambios en `lib/` ni en `test/`.
+- [x] CA-9: `quality-gate` en verde en CI.
 
 ## 10. Fuera de alcance
 
