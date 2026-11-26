@@ -59,7 +59,13 @@ Install the following software to set up your development environment:
 ### **2.3 Installation Checklist**
 Follow these steps to verify that your environment is ready:
 
-> **Note:** As of P1-1, runtime license validation (Envato purchase code) is no longer performed on the client. Do not add a `purchaseCode` constant to `AppConfig`; licensing, if required, must be enforced server-side.
+> **Note:** As of P1-1, the Envato token and purchase code are NOT hardcoded in source. Provide them at build time:
+> ```bash
+> fvm flutter run \
+>   --dart-define=ENVATO_TOKEN=YOUR_ENVATO_AUTHOR_TOKEN \
+>   --dart-define=PURCHASE_CODE=YOUR_PURCHASE_CODE
+> ```
+> For release builds, pass the same `--dart-define` flags to `flutter build`. Without them, license validation fails closed (the app will not start).
 
 1. **Install Flutter SDK**
    - Download the Flutter SDK from the official website and extract it to your desired location (e.g., `C:\flutter` or `~/flutter`).
