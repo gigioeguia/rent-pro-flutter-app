@@ -325,7 +325,7 @@ class TenantProfileDetails extends StatelessWidget {
         // Vehicles Information
         Text(context.t.common.vehiclesInfo.plain, style: _sectionHeaderStyle),
         const SizedBox.square(dimension: 12),
-        if (details.userDetails?.vehiclesInfo?.isNotEmpty == false)
+        if (TenantProfileVehicles.hasVehicles(details.userDetails?.vehiclesInfo))
           ...List.generate(
             details.userDetails?.vehiclesInfo?.length ?? 0,
             (index) {
@@ -641,4 +641,11 @@ class TenantExpiringReason {
     required this.date,
     required this.message,
   });
+}
+
+/// Helpers testables para la condición de renderizado de vehículos.
+class TenantProfileVehicles {
+  static bool hasVehicles(List<VehiclesInfo>? vehicles) {
+    return vehicles?.isNotEmpty == true;
+  }
 }

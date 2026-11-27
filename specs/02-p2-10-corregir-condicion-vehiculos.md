@@ -1,6 +1,6 @@
 # SPEC 02-P2-10 — Condición de vehículos (P2-10)
 
-> **Status:** In revision
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0)
 > **Date:** 2026-11-27
 > **Objective:** Corregir la condición invertida de renderizado de "Vehicles Information" en el detalle de perfil del tenant, de modo que los vehículos se muestren cuando existen y el mensaje vacío cuando no, extrayendo la condición a un helper testable y cubriéndola con tests unitarios y de widget.
@@ -101,14 +101,14 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: Con `vehiclesInfo` no vacía, se renderizan las filas de vehículos (helper `true`).
-- [ ] CA-2: Con `vehiclesInfo = []`, se muestra `"No vehicle info provided."` (helper `false`).
-- [ ] CA-3: Con `vehiclesInfo = null` (skeleton), se muestra el mensaje sin crash (helper `false`).
-- [ ] CA-4: `fvm flutter analyze` reporta 0 issues tras el cambio.
-- [ ] CA-5: `fvm flutter test` pasa, incluyendo los nuevos tests.
-- [ ] CA-6: Unit test — `hasVehicles(null)` == false; `hasVehicles([])` == false; `hasVehicles([VehiclesInfo()])` == true; `hasVehicles([VehiclesInfo(), VehiclesInfo()])` == true.
-- [ ] CA-7: Widget test — render con vehículo muestra el número de registro; render sin vehículo muestra `"No vehicle info provided."`.
-- [ ] CA-8: Diff limitado a `_tenant_profile_details.dart` y los archivos de test.
+- [x] CA-1: Con `vehiclesInfo` no vacía, se renderizan las filas de vehículos (helper `true`).
+- [x] CA-2: Con `vehiclesInfo = []`, se muestra `"No vehicle info provided."` (helper `false`).
+- [x] CA-3: Con `vehiclesInfo = null` (skeleton), se muestra el mensaje sin crash (helper `false`).
+- [x] CA-4: `fvm flutter analyze` reporta 0 issues tras el cambio.
+- [x] CA-5: `fvm flutter test` pasa, incluyendo los nuevos tests.
+- [x] CA-6: Unit test — `hasVehicles(null)` == false; `hasVehicles([])` == false; `hasVehicles([VehiclesInfo()])` == true; `hasVehicles([VehiclesInfo(), VehiclesInfo()])` == true.
+- [x] CA-7: Widget test — render con vehículo muestra el número de registro; render sin vehículo muestra `"No vehicle info provided."`.
+- [x] CA-8: Diff limitado a `_tenant_profile_details.dart` y los archivos de test.
 
 ## 10. Fuera de alcance
 
