@@ -1,6 +1,6 @@
 # SPEC 02-P2-5 — Contactar landlord en My Rent details (P2-5)
 
-> **Status:** En revisión
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0)
 > **Date:** 2026-11-27
 > **Objective:** Hacer que los botones de WhatsApp y Email del flujo de envío de acuerdo (My Rent details) contacten al **landlord** del rent y no al propio tenant, corrigiendo el destinatario de la comunicación.
@@ -145,7 +145,21 @@
 
 ---
 
-### Implementación de referencia (borrador)
+## 14. Verificación manual (pendiente — CA-6)
+
+Prueba manual requerida antes de cerrar definitivamente el hallazgo. Ejecutar en dispositivo/emulador con backend real.
+
+**Pasos:**
+1. Iniciar sesión como tenant con un rent en estado `processing` y sin acuerdo subido (`tenantAgreement?.remote == null`).
+2. Abrir "My Rent details" del rent.
+3. Verificar en la sección "Landlord Details" el teléfono/email del landlord.
+4. Tocar el botón WhatsApp → debe abrir WhatsApp con el número del **landlord** (no del tenant).
+5. Tocar el botón Email → debe abrir el cliente de correo con el email del **landlord** (no del tenant).
+6. Caso negativo: rent cuyo landlord no tenga teléfono/email → al tocar el botón debe mostrarse snackbar "Landlord contact is unavailable." sin intentar abrir un destino inválido.
+
+**Evidencia a registrar:** capturas de pantalla o log de la URL lanzada (`https://wa.me/<landlord phone>`, `mailto:<landlord email>`).
+
+**Estado:** Pendiente (no ejecutada en esta iteración).
 
 **`tenant_my_rent_details_view.dart` — botón WhatsApp (~línea 647)**
 
