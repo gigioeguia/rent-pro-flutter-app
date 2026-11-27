@@ -56,7 +56,7 @@
 - RF-3: Preservar clases de plugins que usan reflexión (si aplica). Plugins del proyecto: `flutter_inappwebview`, `file_picker`, `image_picker`, `permission_handler`, `device_info_plus`, `connectivity_plus`, `url_launcher`, `path_provider`, `shared_preferences`, `flutter_secure_storage`, `open_file`. La mayoría incluye sus propias reglas de consumidor (consumer ProGuard) en el AAR; si falta alguna, añadir `-keep` específico documentado.
 - RF-4: `shrinkResources true` solo elimina recursos Android no referenciados; si algún recurso se carga por nombre dinámico, añadir `tools:keep` en `res/raw/keep.xml` o desactivar shrinkResources (CA de rollback).
 - RF-5: El build release debe ejecutarse en CI (ya existe `flutter build apk --release` en `build.yml`); no requiere cambios adicionales salvo asegurar que falla si R8 rompe.
-- RF-6: No se activa ofuscación Dart (`--obfuscate`) en esta spec; queda como tarea futura (P5).
+- RF-6: Se activa ofuscación Dart (`--obfuscate --split-debug-info=build/symbols`) en el build de release; los símbolos se suben como artefacto en CI para de-obfuscación de crashes. (Antes: fuera de alcance P5; ampliado tras revisión de seguridad.)
 
 ## 5. Requisitos no funcionales
 

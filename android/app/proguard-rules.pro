@@ -15,8 +15,8 @@
 # Clases opcionales (Apache Tika / xml.stream) no presentes en el classpath
 -dontwarn javax.xml.stream.**
 
-# Clases generadas de la app (applicationId)
--keep class com.codeconnect.rentpro.** { *; }
+# Solo la Activity principal (referenciada por el manifest); el resto se ofusca.
+-keep class com.codeconnect.rentpro.MainActivity { *; }
 
 # Plugins con reflexión / carga dinámica
 -dontwarn com.pichillilorenzo.flutter_inappwebview.**
