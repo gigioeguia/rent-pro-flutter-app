@@ -1,6 +1,6 @@
 # SPEC 02-P2-3 — Corregir mapeo de categoría en edición (P2-3)
 
-> **Status:** Aprovado
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-7)
 > **Date:** 2026-11-27
 > **Objective:** Hacer que `AddPropertyStepOneModel.fromJson` lea la categoría desde `category_id` (con fallback a `category.id`) para que, al editar una propiedad, el Paso 1 y el Paso 3 inicialicen correctamente la categoría seleccionada.
@@ -80,11 +80,11 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: JSON con `category_id` produce `categoryId` correcto (T1).
-- [ ] CA-2: JSON con `category.id` (sin `category_id`) produce `categoryId` correcto (T2).
-- [ ] CA-3: JSON sin categoría produce `categoryId` null (T3).
-- [ ] CA-4: `fvm flutter analyze` 0 issues.
-- [ ] CA-5: `fvm flutter test` en verde (existentes + T1–T3).
+- [x] CA-1: JSON con `category_id` produce `categoryId` correcto (T1).
+- [x] CA-2: JSON con `category.id` (sin `category_id`) produce `categoryId` correcto (T2).
+- [x] CA-3: JSON sin categoría produce `categoryId` null (T3).
+- [x] CA-4: `fvm flutter analyze` 0 issues.
+- [x] CA-5: `fvm flutter test` en verde (existentes + T1–T3).
 
 ## 10. Fuera de alcance
 
