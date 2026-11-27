@@ -1,6 +1,6 @@
 # SPEC 02-P2-3 — Corregir mapeo de categoría en edición (P2-3)
 
-> **Status:** En revisión
+> **Status:** Aprovado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-7)
 > **Date:** 2026-11-27
 > **Objective:** Hacer que `AddPropertyStepOneModel.fromJson` lea la categoría desde `category_id` (con fallback a `category.id`) para que, al editar una propiedad, el Paso 1 y el Paso 3 inicialicen correctamente la categoría seleccionada.
