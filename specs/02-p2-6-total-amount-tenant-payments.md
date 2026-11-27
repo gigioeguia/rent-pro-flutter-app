@@ -1,6 +1,6 @@
 # SPEC 02 — Corregir total amount en pagos tenant (P2-6)
 
-> **Status:** In review
+> **Status:** Implemented
 > **Depends on:** SPEC 00 (P0-1)
 > **Date:** 2026-11-27
 > **Objective:** Mostrar el campo `totalAmount` (en lugar de `subtotalAmount`) en la fila "Total Amount" de la lista de pagos de renta del tenant, manteniendo el resto de la vista y los contratos con backend sin cambios.
