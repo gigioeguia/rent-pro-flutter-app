@@ -1,6 +1,6 @@
 # SPEC 01 — Activar minify/shrink en release (P1-5)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-2)
 > **Date:** 2026-11-26
 > **Objective:** Habilitar R8 (`minifyEnabled` y `shrinkResources`) en el buildType release de Android, con reglas ProGuard que preserven Flutter/plugins, y verificar que el APK release compila en CI, reduciendo tamaño y dificultando ingeniería inversa sin romper funcionalidad.
@@ -95,15 +95,15 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: `minifyEnabled true` en `buildTypes.release`.
-- [ ] CA-2: `shrinkResources true` en `buildTypes.release`.
-- [ ] CA-3: `proguardFiles` referencia `proguard-rules.pro`.
-- [ ] CA-4: `proguard-rules.pro` existe con reglas Flutter estándar.
-- [ ] CA-5: `flutter build apk --release` exitoso (local o CI).
-- [ ] CA-6: APK release más pequeño que baseline (registrar tamaños en PR).
-- [ ] CA-7: Smoke test manual de la app release (login → navegación → un flujo de pago/archivo) sin crash.
-- [ ] CA-8: CI `build.yml` sigue en verde con minify activo.
-- [ ] CA-9: `flutter analyze` sin cambios (0 issues).
+- [x] CA-1: `minifyEnabled true` en `buildTypes.release`. (verificado en `android/app/build.gradle`)
+- [x] CA-2: `shrinkResources true` en `buildTypes.release`. (verificado en `android/app/build.gradle`)
+- [x] CA-3: `proguardFiles` referencia `proguard-rules.pro`. (verificado en `android/app/build.gradle`)
+- [x] CA-4: `proguard-rules.pro` existe con reglas Flutter estándar. (verificado en `android/app/proguard-rules.pro`)
+- [x] CA-5: `flutter build apk --release` exitoso (local o CI). (build exitoso: 99.9MB con `--obfuscate --split-debug-info`)
+- [ ] CA-6: APK release más pequeño que baseline (registrar tamaños en PR). (pendiente: no hay baseline sin minify registrado; build actual 99.9MB)
+- [ ] CA-7: Smoke test manual de la app release (login → navegación → un flujo de pago/archivo) sin crash. (pendiente: validación manual)
+- [x] CA-8: CI `build.yml` sigue en verde con minify activo. (comandos CI reproducidos localmente: analyze 0 issues + build release OK)
+- [x] CA-9: `flutter analyze` sin cambios (0 issues). (verificado: 0 issues)
 
 ## 10. Fuera de alcance
 
@@ -134,3 +134,11 @@
 - ¿Se mide el tamaño del APK antes/después para evidenciar la reducción? Recomendado: sí, registrar en PR.
 - ¿Se añade `flutter build appbundle --release` además de APK para Play Store? Opcional (P5).
 - ¿Se activa `--obfuscate` de Dart en un PR separado? Recomendado: sí, como P5 con gestión de símbolos.
+
+## 14. Validación (2026-11-27)
+
+- `flutter analyze`: 0 issues.
+- `flutter build apk --release --obfuscate --split-debug-info=build/symbols`: exitoso (99.9MB).
+- `android/app/build.gradle` release: `minifyEnabled true`, `shrinkResources true`, `proguardFiles` referenciado.
+- `android/app/proguard-rules.pro`: reglas Flutter estándar presentes.
+- Pendientes manuales: CA-6 (medir tamaño vs. baseline sin minify) y CA-7 (smoke test manual de app release).
