@@ -1,6 +1,6 @@
 # SPEC 02-P2-4 — Resetear `selectedUnitId` al cambiar propiedad (P2-4)
 
-> **Status:** Aprovado
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0)
 > **Date:** 2026-11-27
 > **Objective:** Evitar que un `selectedUnitId` obsoleto se envíe al cambiar de propiedad en la invitación de renta, reseteándolo a `null` y reflejándolo en la UI.
