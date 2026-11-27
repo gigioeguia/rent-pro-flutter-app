@@ -149,6 +149,7 @@ class _LandlordManageRentInvitationViewState extends ConsumerState<LandlordManag
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CustomDropdown<int>(
+                            value: controller.selectedUnitId,
                             isExpanded: true,
                             decoration: InputDecoration(
                               labelText: context.t.common.unitNumber,

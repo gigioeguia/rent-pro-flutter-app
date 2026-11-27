@@ -1,6 +1,6 @@
 # SPEC 02-P2-4 — Resetear `selectedUnitId` al cambiar propiedad (P2-4)
 
-> **Status:** En revisión
+> **Status:** Aprovado
 > **Depends on:** SPEC 00 (Fase 0)
 > **Date:** 2026-11-27
 > **Objective:** Evitar que un `selectedUnitId` obsoleto se envíe al cambiar de propiedad en la invitación de renta, reseteándolo a `null` y reflejándolo en la UI.
@@ -110,13 +110,13 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: `handleSelectProperty` con id distinto resetea `selectedUnitId` a `null` (T1).
-- [ ] CA-2: `handleSelectProperty` con el mismo id conserva `selectedUnitId` (T2).
-- [ ] CA-3: `handleSelectProperty(null)` resetea `selectedPropertyId` y `selectedUnitId` (T3).
-- [ ] CA-4: `handleSelectUnit` asigna correctamente (T4).
-- [ ] CA-5: El dropdown de unidad bindea `value: controller.selectedUnitId`.
-- [ ] CA-6: `fvm flutter analyze` 0 issues.
-- [ ] CA-7: `fvm flutter test` en verde (existentes + T1–T4).
+- [x] CA-1: `handleSelectProperty` con id distinto resetea `selectedUnitId` a `null` (T1).
+- [x] CA-2: `handleSelectProperty` con el mismo id conserva `selectedUnitId` (T2).
+- [x] CA-3: `handleSelectProperty(null)` resetea `selectedPropertyId` y `selectedUnitId` (T3).
+- [x] CA-4: `handleSelectUnit` asigna correctamente (T4).
+- [x] CA-5: El dropdown de unidad bindea `value: controller.selectedUnitId`.
+- [x] CA-6: `fvm flutter analyze` 0 issues.
+- [x] CA-7: `fvm flutter test` en verde (existentes + T1–T4).
 
 ---
 
