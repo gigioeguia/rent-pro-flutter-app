@@ -50,7 +50,9 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 | P0-10 | Limpiar issues de `flutter analyze` (32 infos) y CI estricto | `lib/...` (imports, prints, deprecations), `.github/workflows/ci.yml` | `flutter analyze` sin issues; CI con `flutter analyze` (fatal infos) |
 | P0-11 | Documentar riesgo de reproducibilidad de dependencias git/overrides (no bloqueante para P0-2) | `pubspec.yaml`, `pubspec_overrides.yaml`, `specs/00-p0-2-fvm-version.md` | Riesgo documentado en spec P0-2 (sección 10/11); sin corrección en esta fase |
 
-### Fase 1 – Seguridad crítica (P1, 1-2 semanas)
+### Fase 1 – Seguridad crítica (P1, 1-2 semanas) ✅ CERRADA (2026-11-27)
+
+**Estado:** Cerrada el 2026-11-27. Los 7 specs (P1-1…P1-7) implementados; `fvm flutter analyze` 0 issues; `fvm flutter test` 44/44 verde; build release exitoso (109.8 MB con minify+shrink+obfuscación). Quedan **4 criterios de validación manual en dispositivo** pendientes (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8), asignados a QA/mantenedor antes de publicar en Play Store. No bloquean el cierre de la fase.
 
 | ID | Tarea | Archivos clave | Criterio |
 |----|-------|----------------|----------|
@@ -142,4 +144,4 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 
 ## Próximo paso
 
-Fase 0 cerrada. Iniciar Fase 1 (seguridad crítica). Pendiente manual: configurar branch protection en GitHub (marcar `quality-gate` como required) según `docs/quality-gates.md`.
+Fase 0 y Fase 1 cerradas. Iniciar Fase 2 (flujos funcionales críticos). Pendientes manuales: smoke de release en dispositivo y descargas en Android 7/10/11+/13+ (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8), y configurar branch protection en GitHub (marcar `quality-gate` como required) según `docs/quality-gates.md`.

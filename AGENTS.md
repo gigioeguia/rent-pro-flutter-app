@@ -25,7 +25,8 @@ Detalles y make targets en `CONTRIBUTING.md`.
 ## Estado del proyecto
 
 - **Fase 0 cerrada** (2026-11-26): CI activo, analyze 0 issues, tests 26/26 verde, cobertura 2.4%.
-- Siguiente: Fase 1 (seguridad crítica). Plan completo en `.analisis/plan_accion.md`.
+- **Fase 1 cerrada** (2026-11-27): seguridad crítica (P1-1…P1-7) implementada; analyze 0 issues; tests 44/44 verde; build release OK (109.8 MB). Pendientes manuales: smoke de release en dispositivo y descargas en Android 7/10/11+/13+ (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8).
+- Siguiente: Fase 2 (flujos funcionales críticos). Plan completo en `.analisis/plan_accion.md`.
 - Pendiente manual: branch protection en GitHub (`quality-gate` required) — `docs/quality-gates.md`.
 
 ## Convenciones
