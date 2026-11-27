@@ -90,9 +90,10 @@ class _LandlordSetupProfileViewState
                         SizedBox.fromSize(
                           size: Size.fromHeight(50.fH),
                           child: ElevatedButton(
-                            onPressed: () async => await _handleFormSubmit(
-                              formContext,
-                            ),
+                            onPressed: () async {
+                              if (!FormWrapper.validate(formContext)) return;
+                              await _handleFormSubmit(formContext);
+                            },
                             // child: const Text('Continue'),
                             child: Text(context.t.action.kContinue),
                           ),
