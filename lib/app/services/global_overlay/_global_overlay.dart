@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../i18n/strings.g.dart';
+import '../../data/repositories/repositories.dart';
 import '../../routes/app_routes.gr.dart';
 import '../../widgets/widgets.dart';
-import '../services.dart';
 
 class GlobalOverlayService {
   static GlobalOverlayService? _instance;
@@ -26,8 +26,34 @@ class GlobalOverlayService {
 
   void _registerAuthListener() {
     ref.read(httpDioClientProvider).restClient.interceptors.add(
-      AuthListener(onRevoke: () async {
-        if (context.router.currentPath.startsWith('/auth/')) return;
+      AuthListener(onRevoke: (failedToken) async {
+        final _currentToken = ref.read(httpDioClientProvider).token;
+        if (failedToken != null &&
+            _currentToken != null &&
+            failedToken != _currentToken) {
+          return;
+        }
+
+        final _wasAuthRoute = context.router.currentPath.startsWith('/auth/');
+
+        try {
+          await ref.read(httpDioClientProvider).clearToken();
+          await ref.read(httpDioClientProvider).secureStorage.delete(
+            SecureStorageService.userEmail,
+          );
+          await ref.read(httpDioClientProvider).secureStorage.delete(
+            SecureStorageService.userPassword,
+          );
+        } catch (e) {
+          debugPrint('Secure storage cleanup failed during revoke: $e');
+        }
+        try {
+          ref.read(userRepositoryProvider.notifier).clearUser();
+        } catch (_) {}
+
+        if (_wasAuthRoute) return;
+
+        if (!context.mounted) return;
 
         final _result = await showDialog(
           context: context,

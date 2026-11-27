@@ -7,7 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/core.dart' show DAPIEndpoints, DAppSPrefsKeys;
+import '../../core/core.dart' show DAPIEndpoints;
+import '../secure_storage/_secure_storage_service.dart';
 
 export 'dart:convert' show jsonEncode, jsonDecode;
 export 'dart:developer' show log;
@@ -20,9 +21,11 @@ class HTTPDioClient {
   HTTPDioClient._({
     this.enableLogging = true,
     required this.prefs,
+    required this.secureStorage,
   });
 
   final SharedPreferences prefs;
+  final SecureStorageService secureStorage;
   static HTTPDioClient? _instance;
   final bool enableLogging;
   late dio.Dio restClient;
@@ -39,15 +42,16 @@ class HTTPDioClient {
   );
   final _requestTimeout = const Duration(seconds: 20);
 
-  factory HTTPDioClient.initClient({required SharedPreferences prefs}) {
+  static Future<HTTPDioClient> initClient({
+    required SharedPreferences prefs,
+    required SecureStorageService secureStorage,
+  }) async {
     try {
       final _i = _instance ??= HTTPDioClient._(
         prefs: prefs,
+        secureStorage: secureStorage,
         enableLogging: kDebugMode,
       );
-
-      final _token = _i.prefs.getString(DAppSPrefsKeys.authToken);
-      if (_token != null) _i.setToken(_token);
 
       _i.restClient = dio.Dio()
         ..options = dio.BaseOptions(
@@ -55,6 +59,9 @@ class HTTPDioClient {
           connectTimeout: _i._requestTimeout,
           headers: {"Accept": "application/json"},
         );
+
+      final _token = await _i.secureStorage.read(SecureStorageService.authToken);
+      if (_token != null) await _i.setToken(_token);
 
       if (_i.enableLogging) {
         _i.restClient.interceptors.add(_i._logger);
@@ -67,17 +74,26 @@ class HTTPDioClient {
   }
 
   String? _token;
+  String? get token => _token;
   Map<String, String> get getAuthHeader {
+    if (_token == null) return {};
     return {
       "Authorization": "Bearer $_token",
     };
   }
 
   Future<void> setToken(String value, [bool save = false]) async {
-    _token = value;
     if (save) {
-      await prefs.setString(DAppSPrefsKeys.authToken, value);
+      await secureStorage.write(SecureStorageService.authToken, value);
     }
+    _token = value;
+    restClient.options.headers['Authorization'] = 'Bearer $value';
+  }
+
+  Future<void> clearToken() async {
+    _token = null;
+    restClient.options.headers.remove('Authorization');
+    await secureStorage.delete(SecureStorageService.authToken);
   }
 
   Future<Either<String, File>> downloadFile(
@@ -171,7 +187,7 @@ extension DioFormExtension on Map<String, dynamic> {
 
 class AuthListener extends dio.Interceptor {
   AuthListener({required this.onRevoke});
-  final void Function() onRevoke;
+  final Future<void> Function(String? failedToken) onRevoke;
 
   @override
   void onError(
@@ -182,7 +198,12 @@ class AuthListener extends dio.Interceptor {
     final _reqOpt = _response?.requestOptions;
     if (_response?.statusCode == HttpStatus.unauthorized) {
       final _msg = _response?.data?['message'] ?? 'Unauthorized access';
-      onRevoke();
+      final _authHeader = _reqOpt?.headers['Authorization']?.toString();
+      final _failedToken = _authHeader?.replaceFirst(
+        RegExp(r'^Bearer\s*', caseSensitive: false),
+        '',
+      );
+      onRevoke(_failedToken);
       return handler.reject(
         dio.DioException(
           requestOptions: _reqOpt ?? dio.RequestOptions(),

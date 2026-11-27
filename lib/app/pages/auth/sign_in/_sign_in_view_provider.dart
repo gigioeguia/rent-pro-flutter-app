@@ -16,6 +16,10 @@ class SignInViewNotifier extends ChangeNotifier {
   bool rememberMe = true;
   void toggleRememberMe([bool? value]) {
     rememberMe = value ?? !rememberMe;
+    if (!rememberMe) {
+      signinProvider.httpClient.secureStorage.delete(SecureStorageService.userEmail);
+      signinProvider.httpClient.secureStorage.delete(SecureStorageService.userPassword);
+    }
     notifyListeners();
   }
 
@@ -26,6 +30,15 @@ class SignInViewNotifier extends ChangeNotifier {
   //-------------------------Form Field Props-------------------------//
 
   Future<Either<String?, String?>> handleSignIn() async {
+    if (!rememberMe) {
+      await signinProvider.httpClient.secureStorage.delete(
+        SecureStorageService.userEmail,
+      );
+      await signinProvider.httpClient.secureStorage.delete(
+        SecureStorageService.userPassword,
+      );
+    }
+
     final _result = await signinProvider.signIn(
       email: emailController.text,
       password: passwordController.text,
@@ -33,7 +46,6 @@ class SignInViewNotifier extends ChangeNotifier {
 
     if (_result.isSuccess) {
       if (rememberMe) await handleRememberMe(false);
-
       return Either.success('Signed in successfully');
     }
 
@@ -41,26 +53,23 @@ class SignInViewNotifier extends ChangeNotifier {
   }
 
   Future<bool> handleRememberMe([bool recover = true]) async {
-    final _prefs = signinProvider.httpClient.prefs;
+    final _secure = signinProvider.httpClient.secureStorage;
 
     if (recover) {
-      emailController.text = _prefs.getString(DAppSPrefsKeys.userEmail) ?? '';
-      passwordController.text = _prefs.getString(
-            DAppSPrefsKeys.userPassword,
-          ) ??
-          '';
+      final _savedEmail = await _secure.read(SecureStorageService.userEmail) ?? '';
+      final _savedPassword =
+          await _secure.read(SecureStorageService.userPassword) ?? '';
+      if (emailController.text.isEmpty) {
+        emailController.text = _savedEmail;
+      }
+      if (passwordController.text.isEmpty) {
+        passwordController.text = _savedPassword;
+      }
       return true;
     }
-    final _savedEmail = await _prefs.setString(
-      DAppSPrefsKeys.userEmail,
-      emailController.text,
-    );
-    final _savedPassword = await _prefs.setString(
-      DAppSPrefsKeys.userPassword,
-      passwordController.text,
-    );
-
-    return _savedEmail && _savedPassword;
+    await _secure.write(SecureStorageService.userEmail, emailController.text);
+    await _secure.write(SecureStorageService.userPassword, passwordController.text);
+    return true;
   }
 }
 

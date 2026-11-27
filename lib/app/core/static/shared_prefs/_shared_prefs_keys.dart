@@ -8,4 +8,5 @@ abstract class DAppSPrefsKeys {
 
   static const String profileComplete = 'profile_complete';
   static const String searchHistory = 'search_history';
+  static const String secureStorageMigrated = 'secure_storage_migrated_v1';
 }
