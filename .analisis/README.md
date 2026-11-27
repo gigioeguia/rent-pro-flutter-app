@@ -19,6 +19,7 @@ Documentos de análisis del proyecto Rent Pro:
 
 - **Fase 0 cerrada:** CI activo, `flutter analyze` 0 issues, `flutter test` 26/26 verde, cobertura 2.4% (umbral 2%).
 - **Fase 1 cerrada:** seguridad crítica (P1-1…P1-7) implementada; `flutter analyze` 0 issues; `flutter test` 44/44 verde; build release OK (109.8 MB). Pendientes manuales: smoke de release en dispositivo y descargas en Android 7/10/11+/13+ (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8).
+- **Fase 2 cerrada:** flujos funcionales críticos (P2-1…P2-10) implementados; `flutter analyze` 0 issues; `flutter test` 81/81 verde. Pendientes manuales: P2-5 CA-6 (contacto landlord), P2-6 CA-5 (captura total vs subtotal), P2-7 CA-5 (captura validación perfil), P2-8 CA-8 (aprobación con acuerdo).
 - Pendiente manual: configurar branch protection en GitHub (`quality-gate` required) — ver `docs/quality-gates.md`.
 
 ## Artefactos de implementación

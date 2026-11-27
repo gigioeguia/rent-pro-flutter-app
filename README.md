@@ -39,8 +39,10 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full, reproducible command refe
 ## Project status
 
 - **Fase 0 (CI/CD, excepciones, tests base): ✅ cerrada** (2026-11-26). Baseline: `flutter analyze` 0 issues, `flutter test` 26/26 verde, cobertura 2.4% (umbral 2%).
+- **Fase 1 (seguridad crítica): ✅ cerrada** (2026-11-27). `flutter analyze` 0 issues, `flutter test` 44/44 verde, build release OK (109.8 MB). Pendientes manuales: smoke de release en dispositivo y descargas en Android 7/10/11+/13+ (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8).
+- **Fase 2 (flujos funcionales críticos): ✅ cerrada** (2026-11-27). `flutter analyze` 0 issues, `flutter test` 81/81 verde. Pendientes manuales: P2-5 CA-6, P2-6 CA-5, P2-7 CA-5, P2-8 CA-8.
 - Pipeline CI activo (`.github/workflows/ci.yml`): analyze + test + coverage + quality gate en PRs a `main`.
-- Siguiente fase: Fase 1 (seguridad crítica). Ver [`.analisis/plan_accion.md`](.analisis/plan_accion.md).
+- Siguiente fase: Fase 3 (estado y UX). Ver [`.analisis/plan_accion.md`](.analisis/plan_accion.md).
 
 ## Project docs
 
