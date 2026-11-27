@@ -646,7 +646,7 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                                 onPressed: () async {
                                   return await SharedWidgets.handleLaunchURL(
                                     context,
-                                    'https://wa.me/${_data?.tenant?.phone?.buildPhone}',
+                                    'https://wa.me/${_data?.landlord?.phone?.buildPhone}',
                                   );
                                 },
                                 icon: Skeleton.shade(
@@ -671,7 +671,7 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                                 onPressed: () async {
                                   return await SharedWidgets.handleLaunchURL(
                                     context,
-                                    'mailto:${_data?.tenant?.email}',
+                                    'mailto:${_data?.landlord?.email}',
                                   );
                                 },
                                 icon: Icon(IconlyBold.message),

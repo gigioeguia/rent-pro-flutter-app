@@ -1,6 +1,6 @@
 # SPEC 02-P2-5 — Contactar landlord en My Rent details (P2-5)
 
-> **Status:** Aprovado
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0)
 > **Date:** 2026-11-27
 > **Objective:** Hacer que los botones de WhatsApp y Email del flujo de envío de acuerdo (My Rent details) contacten al **landlord** del rent y no al propio tenant, corrigiendo el destinatario de la comunicación.
@@ -101,11 +101,11 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: El botón WhatsApp construye la URL con `_data?.landlord?.phone?.buildPhone`.
-- [ ] CA-2: El botón Email construye la URL con `_data?.landlord?.email`.
-- [ ] CA-3: No se modifican condiciones de visibilidad, estilos ni iconos.
-- [ ] CA-4: `fvm flutter analyze` 0 issues.
-- [ ] CA-5: `fvm flutter test` en verde (existentes).
+- [x] CA-1: El botón WhatsApp construye la URL con `_data?.landlord?.phone?.buildPhone`.
+- [x] CA-2: El botón Email construye la URL con `_data?.landlord?.email`.
+- [x] CA-3: No se modifican condiciones de visibilidad, estilos ni iconos.
+- [x] CA-4: `fvm flutter analyze` 0 issues.
+- [x] CA-5: `fvm flutter test` en verde (existentes).
 - [ ] CA-6: Verificación manual: en estado `processing` sin acuerdo subido, WhatsApp/Email abren el contacto del landlord (no del tenant).
 
 ---
