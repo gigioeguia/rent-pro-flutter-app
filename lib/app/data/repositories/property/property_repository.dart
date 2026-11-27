@@ -47,7 +47,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       }
       throw Exception('Failed to get properties: ${response.statusCode}');
     } on DioException catch (e) {
-      final message = e.response?.data['message'] ?? 'Failed to get properties';
+      final message = e.errorMessage(fallback: 'Failed to get properties');
       throw Exception(message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -65,7 +65,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       final _model = PropertyResponseModel.fromJson(_response.data);
       return _model;
     } on DioException catch (e) {
-      final _message = e.response?.data['message'] ?? 'Failed to get property';
+      final _message = e.errorMessage(fallback: 'Failed to get property');
       throw Exception(_message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -93,7 +93,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       return PropertyModel.fromJson(_data);
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Something went wrong, please try again.',
+        e.errorMessage(fallback: 'Something went wrong, please try again.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -109,7 +109,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       eventBus.fire<PropertyEvent>(PropertyEvent.deleted);
       return _message;
     } on DioException catch (e) {
-      final _errorMessage = e.response?.data['message'] as String? ?? 'Failed to delete property, please try again!';
+      final _errorMessage = e.errorMessage(fallback: 'Failed to delete property, please try again!');
       throw Exception(_errorMessage);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -135,7 +135,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       return _response.data?['message'] ?? 'Updated successfully';
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to chnage status',
+        e.errorMessage(fallback: 'Failed to chnage status'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -152,7 +152,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       return _model;
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data?['message'] ?? 'Failed to get house types.',
+        e.errorMessage(fallback: 'Failed to get house types.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -184,7 +184,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       final _rData = _response.data?['data'];
       return Either.success(PropertyReview.fromJson(_rData));
     } on DioException catch (e) {
-      final message = e.response?.data?['message'] ?? 'Failed to post review';
+      final message = e.errorMessage(fallback: 'Failed to post review');
       return Either.failure(message);
     } catch (e) {
       throw Either.failure('An unexpected error occurred: $e');
@@ -205,7 +205,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
         (json) => FavoriteProperty.fromJson(json),
       );
     } on DioException catch (e) {
-      final message = e.response?.data['message'] ?? 'Failed to get favorites';
+      final message = e.errorMessage(fallback: 'Failed to get favorites');
       throw Exception(message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -224,7 +224,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       eventBus.fire<PropertyEvent>(PropertyEvent.modified);
       return response.data?["message"] ?? 'Property added to favorite list.';
     } on DioException catch (e) {
-      final message = e.response?.data['message'] ?? 'Failed to create favorite';
+      final message = e.errorMessage(fallback: 'Failed to create favorite');
       throw Exception(message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -242,7 +242,7 @@ class PropertyRepository extends BaseRepository with FacilityRepoMixin, AmenityR
       eventBus.fire<PropertyEvent>(PropertyEvent.modified);
       return response.data?['message'] ?? 'Removed successfully';
     } on DioException catch (e) {
-      final message = e.response?.data['message'] ?? 'Failed to remove favorite';
+      final message = e.errorMessage(fallback: 'Failed to remove favorite');
       throw Exception(message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');

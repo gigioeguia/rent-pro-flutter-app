@@ -20,7 +20,7 @@ mixin FacilityRepoMixin on BaseRepository {
       );
       return FacilityAmenityListModel.fromJson(response.data, FacilityAmenity.fromJson);
     } on DioException catch (e) {
-      final message = e.response?.data?['message'] ?? 'Failed to get facility list.';
+      final message = e.errorMessage(fallback: 'Failed to get facility list.');
       throw Exception(message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -44,7 +44,7 @@ mixin FacilityRepoMixin on BaseRepository {
       eventBus.fire<FacilityEvent>(FacilityEvent.modified);
       return FacilityAmenity.fromJson(_response.data['data']);
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message'] ?? 'Something went wrong please try again');
+      throw Exception(e.errorMessage(fallback: 'Something went wrong please try again'));
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
     }
@@ -61,7 +61,7 @@ mixin FacilityRepoMixin on BaseRepository {
       eventBus.fire<FacilityEvent>(FacilityEvent.deleted);
       return _response.data?['message'] ?? 'Deleted successfully';
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message'] ?? 'Something went wrong, please try again');
+      throw Exception(e.errorMessage(fallback: 'Something went wrong, please try again'));
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
     }
@@ -104,7 +104,7 @@ mixin AmenityRepoMixin on BaseRepository {
         FacilityAmenity.fromJson,
       );
     } on DioException catch (e) {
-      final message = e.response?.data?['message'] ?? 'Failed to get amenity list.';
+      final message = e.errorMessage(fallback: 'Failed to get amenity list.');
       throw Exception(message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -128,7 +128,7 @@ mixin AmenityRepoMixin on BaseRepository {
       eventBus.fire<AmenityEvent>(AmenityEvent.modified);
       return FacilityAmenity.fromJson(_response.data['data']);
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message'] ?? 'Something went wrong please try again');
+      throw Exception(e.errorMessage(fallback: 'Something went wrong please try again'));
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
     }
@@ -145,7 +145,7 @@ mixin AmenityRepoMixin on BaseRepository {
       eventBus.fire<AmenityEvent>(AmenityEvent.deleted);
       return _response.data?['message'] ?? 'Deleted successfully';
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message'] ?? 'Something went wrong, please try again');
+      throw Exception(e.errorMessage(fallback: 'Something went wrong, please try again'));
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
     }

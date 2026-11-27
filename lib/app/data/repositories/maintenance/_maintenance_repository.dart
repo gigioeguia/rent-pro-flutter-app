@@ -37,7 +37,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get maintenance list',
+        e.errorMessage(fallback: 'Failed to get maintenance list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -63,7 +63,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get maintenance details.',
+        e.errorMessage(fallback: 'Failed to get maintenance details.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -100,7 +100,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to update maintenance',
+        e.errorMessage(fallback: 'Failed to update maintenance'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -131,7 +131,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to reject maintenance',
+        e.errorMessage(fallback: 'Failed to reject maintenance'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -170,7 +170,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to Approve maintenance',
+        e.errorMessage(fallback: 'Failed to Approve maintenance'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -203,7 +203,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to complete maintenance',
+        e.errorMessage(fallback: 'Failed to complete maintenance'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -238,7 +238,7 @@ class MaintenanceRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get maintenance details.',
+        e.errorMessage(fallback: 'Failed to get maintenance details.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');

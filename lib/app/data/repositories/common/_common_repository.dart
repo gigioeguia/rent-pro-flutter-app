@@ -25,7 +25,7 @@ class CommonRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to terms & conditions.',
+        e.errorMessage(fallback: 'Failed to terms & conditions.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -50,7 +50,7 @@ class CommonRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to about us.',
+        e.errorMessage(fallback: 'Failed to about us.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -75,7 +75,7 @@ class CommonRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get notification list.',
+        e.errorMessage(fallback: 'Failed to get notification list.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -102,7 +102,7 @@ class CommonRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to mark as read notifications.',
+        e.errorMessage(fallback: 'Failed to mark as read notifications.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -127,7 +127,7 @@ class CommonRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed get support session.',
+        e.errorMessage(fallback: 'Failed get support session.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -167,7 +167,7 @@ class CommonRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again',
+        e.errorMessage(fallback: 'Something went wrong, please try again'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');

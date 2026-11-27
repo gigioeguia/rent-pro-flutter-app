@@ -26,7 +26,7 @@ class LandlordWithdrawRepository {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to get withdraw methods.',
+        err.errorMessage(fallback: 'Failed to get withdraw methods.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -52,7 +52,7 @@ class LandlordWithdrawRepository {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to get withdraw methods.',
+        err.errorMessage(fallback: 'Failed to get withdraw methods.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -94,7 +94,7 @@ class LandlordWithdrawRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again',
+        e.errorMessage(fallback: 'Something went wrong, please try again'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -123,8 +123,7 @@ class LandlordWithdrawRepository {
         'Failed to delete, please try again!\nstatusCode:${_response.statusCode}',
       );
     } on DioException catch (e) {
-      final _errorMessage = e.response?.data['message'] as String? ??
-          'Failed to delete, please try again!';
+      final _errorMessage = e.errorMessage(fallback: 'Failed to delete, please try again!');
       return Either.failure(_errorMessage);
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -163,7 +162,7 @@ class LandlordWithdrawRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again',
+        e.errorMessage(fallback: 'Something went wrong, please try again'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -204,7 +203,7 @@ class LandlordWithdrawRepository {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to withdraw requests.',
+        err.errorMessage(fallback: 'Failed to withdraw requests.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -230,7 +229,7 @@ class LandlordWithdrawRepository {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to get withdraw summary.',
+        err.errorMessage(fallback: 'Failed to get withdraw summary.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');

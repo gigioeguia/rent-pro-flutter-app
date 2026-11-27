@@ -41,7 +41,7 @@ class LandlordTenantRepository {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to get tenant list.',
+        err.errorMessage(fallback: 'Failed to get tenant list.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -66,7 +66,7 @@ class LandlordTenantRepository {
         'Failed to get tenant details: ${_response.statusCode}',
       );
     } on DioException catch (e) {
-      final _message = e.response?.data['message'] ?? 'Failed to get tenant';
+      final _message = e.errorMessage(fallback: 'Failed to get tenant');
       throw Exception(_message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -108,7 +108,7 @@ class LandlordTenantRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Something went wrong, please try again',
+        e.errorMessage(fallback: 'Something went wrong, please try again'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');

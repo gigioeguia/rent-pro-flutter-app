@@ -37,7 +37,7 @@ class LandlordLaborRepository {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to get labor list.',
+        err.errorMessage(fallback: 'Failed to get labor list.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -62,7 +62,7 @@ class LandlordLaborRepository {
         'Failed to get labor details: ${_response.statusCode}',
       );
     } on DioException catch (e) {
-      final _message = e.response?.data['message'] ?? 'Failed to get labor';
+      final _message = e.errorMessage(fallback: 'Failed to get labor');
       throw Exception(_message);
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -104,7 +104,7 @@ class LandlordLaborRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again',
+        e.errorMessage(fallback: 'Something went wrong, please try again'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -131,8 +131,7 @@ class LandlordLaborRepository {
         'Failed to delete labor, please try again!\nstatusCode:${_response.statusCode}',
       );
     } on DioException catch (e) {
-      final _errorMessage = e.response?.data['message'] as String? ??
-          'Failed to delete labor, please try again!';
+      final _errorMessage = e.errorMessage(fallback: 'Failed to delete labor, please try again!');
       return Either.failure(_errorMessage);
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');

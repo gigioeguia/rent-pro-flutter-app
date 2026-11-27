@@ -34,10 +34,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     }
 
@@ -71,10 +68,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     } catch (e) {
       debugPrint('Sign in failed: $e');
@@ -105,10 +99,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       _result = Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     } catch (e) {
       debugPrint('Sign out failed: $e');
@@ -149,10 +140,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -216,10 +204,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -241,10 +226,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -272,10 +254,7 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again!',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again!'),
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -306,10 +285,7 @@ class UserRepository extends AsyncNotifier<User?> {
       return Either.failure('Something went wrong, please try again');
     } on DioException catch (e) {
       return Either.failure(
-        (e.response?.data is Map
-                ? (e.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Something went wrong, please try again',
+        httpErrorMessage(e, fallback: 'Something went wrong, please try again'),
       );
     }
   }
@@ -353,10 +329,7 @@ class UserRepository extends AsyncNotifier<User?> {
       );
     } on DioException catch (err) {
       throw Exception(
-        (err.response?.data is Map
-                ? (err.response!.data as Map)['message']?.toString()
-                : null) ??
-            'Failed to get subscription plans.',
+        httpErrorMessage(err, fallback: 'Failed to get subscription plans.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
