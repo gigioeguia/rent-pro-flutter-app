@@ -75,6 +75,9 @@ class HTTPDioClient {
 
   String? _token;
   String? get token => _token;
+
+  /// Authorization header for the current session.
+  /// Returns an empty map when there is no token (never `Bearer null`).
   Map<String, String> get getAuthHeader {
     if (_token == null) return {};
     return {
