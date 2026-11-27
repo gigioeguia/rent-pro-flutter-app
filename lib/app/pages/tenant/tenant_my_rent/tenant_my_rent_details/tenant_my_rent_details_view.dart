@@ -644,8 +644,8 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                               height: 50,
                               child: IconButton.filled(
                                  onPressed: () async {
-                                   final _landlordPhone = _data?.landlord?.phone?.buildPhone;
-                                   if (_landlordPhone == null || _landlordPhone.trim().isEmpty) {
+                                   final _url = TenantMyRentContact.whatsAppUrl(_data);
+                                   if (_url == null) {
                                      showCustomSnackBar(
                                        context,
                                        content: Text('Landlord contact is unavailable.'),
@@ -653,10 +653,7 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                                      );
                                      return;
                                    }
-                                   return await SharedWidgets.handleLaunchURL(
-                                     context,
-                                     'https://wa.me/$_landlordPhone',
-                                   );
+                                   return await SharedWidgets.handleLaunchURL(context, _url);
                                  },
                                 icon: Skeleton.shade(
                                   child: Brand(Brands.whatsapp, size: 20),
@@ -678,8 +675,8 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                               height: 50,
                               child: IconButton.filled(
                                 onPressed: () async {
-                                  final _landlordEmail = _data?.landlord?.email;
-                                  if (_landlordEmail == null || _landlordEmail.trim().isEmpty) {
+                                  final _url = TenantMyRentContact.emailUrl(_data);
+                                  if (_url == null) {
                                     showCustomSnackBar(
                                       context,
                                       content: Text('Landlord contact is unavailable.'),
@@ -687,10 +684,7 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                                     );
                                     return;
                                   }
-                                  return await SharedWidgets.handleLaunchURL(
-                                    context,
-                                    'mailto:$_landlordEmail',
-                                  );
+                                  return await SharedWidgets.handleLaunchURL(context, _url);
                                 },
                                 icon: Icon(IconlyBold.message),
                                 style: ElevatedButton.styleFrom(
@@ -803,5 +797,21 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
       return false;
     }
     return true;
+  }
+}
+
+
+/// Helpers testables para construir las URLs de contacto del landlord.
+class TenantMyRentContact {
+  static String? whatsAppUrl(RentDetails? data) {
+    final phone = data?.landlord?.phone?.buildPhone;
+    if (phone == null || phone.trim().isEmpty) return null;
+    return 'https://wa.me/$phone';
+  }
+
+  static String? emailUrl(RentDetails? data) {
+    final email = data?.landlord?.email;
+    if (email == null || email.trim().isEmpty) return null;
+    return 'mailto:$email';
   }
 }
