@@ -1,6 +1,6 @@
 # SPEC 01 — Revisar permisos Android legacy (P1-6)
 
-> **Status:** Draft
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-2 firma), SPEC 01 (P1-5 minify)
 > **Date:** 2026-11-27
 > **Objective:** Eliminar los permisos de almacenamiento legacy y el flag `requestLegacyExternalStorage`, quitar el acceso "All files" (`MANAGE_EXTERNAL_STORAGE`) y redirigir las descargas a almacenamiento específico de la app sin permisos, reduciendo la superficie de ataque y evitando bloqueos de Play Store sin perder la capacidad de descargar y abrir archivos.
@@ -100,14 +100,14 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: Manifest main solo declara `INTERNET` (+ queries existentes); sin `CAMERA`, `READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `requestLegacyExternalStorage`.
-- [ ] CA-2: No se solicita `MANAGE_EXTERNAL_STORAGE` en Dart (grep sin resultados).
-- [ ] CA-3: Descarga en Android 7/10/11+/13+ guarda en app-specific dir y abre correctamente.
-- [ ] CA-4: No aparece prompt de permiso de almacenamiento al descargar.
-- [ ] CA-5: Captura/selección de imagen funciona sin permiso `CAMERA`.
-- [ ] CA-6: `flutter analyze` 0 issues.
-- [ ] CA-7: `flutter build apk --release` exitoso.
-- [ ] CA-8: Smoke test manual en al menos un dispositivo/emulador API 24 y uno API 33+.
+- [x] CA-1: Manifest main solo declara `INTERNET` (+ queries existentes); sin `CAMERA`, `READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `requestLegacyExternalStorage`. (verificado en `android/app/src/main/AndroidManifest.xml`)
+- [x] CA-2: No se solicita `MANAGE_EXTERNAL_STORAGE` en Dart (grep sin resultados). (verificado)
+- [ ] CA-3: Descarga en Android 7/10/11+/13+ guarda en app-specific dir y abre correctamente. (pendiente: smoke test en dispositivo/emulador)
+- [x] CA-4: No aparece prompt de permiso de almacenamiento al descargar. (código no solicita permiso; verificado)
+- [x] CA-5: Captura/selección de imagen funciona sin permiso `CAMERA`. (manifest sin CAMERA; image_picker delega vía intent)
+- [x] CA-6: `flutter analyze` 0 issues. (verificado)
+- [x] CA-7: `flutter build apk --release` exitoso. (build exitoso: 109.8MB)
+- [ ] CA-8: Smoke test manual en al menos un dispositivo/emulador API 24 y uno API 33+. (pendiente: validación manual)
 
 ## 10. Fuera de alcance
 
@@ -137,3 +137,12 @@
 
 - ¿Se añade un indicador en la UI con la ruta del archivo guardado para que el usuario lo ubique? Recomendado: mostrar snackbar con ruta o botón "abrir".
 - ¿Se mantiene `FileProvider` del app (cache-path) o se elimina por no usarse? Recomendado: mantener (bajo riesgo) y revisar en P4.
+
+## 14. Validación (2026-11-27)
+
+- `flutter analyze`: 0 issues.
+- `flutter build apk --release`: exitoso (109.8MB).
+- `flutter test`: 32/32 verde.
+- Manifest main: solo `INTERNET` (+ queries); sin `CAMERA`, `READ/WRITE_EXTERNAL_STORAGE`, `requestLegacyExternalStorage`.
+- Sin referencias a `MANAGE_EXTERNAL_STORAGE` en `lib/` ni `android/`.
+- Pendientes manuales: CA-3 (descarga en API 24/29/30+/33+) y CA-8 (smoke test en dispositivo/emulador).
