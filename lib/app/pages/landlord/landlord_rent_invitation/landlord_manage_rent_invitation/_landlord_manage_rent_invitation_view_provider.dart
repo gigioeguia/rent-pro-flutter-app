@@ -17,7 +17,10 @@ class LandlordManageRentInvitationViewNotifier extends ChangeNotifier {
   late final tenantIdController = TextEditingController();
   int? selectedPropertyId;
   void handleSelectProperty(int? id) {
+    if (selectedPropertyId == id) return;
+
     selectedPropertyId = id;
+    selectedUnitId = null;
     notifyListeners();
   }
 
