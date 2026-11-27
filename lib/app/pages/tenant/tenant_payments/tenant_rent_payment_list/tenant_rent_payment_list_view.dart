@@ -46,7 +46,7 @@ class TenantRentPaymentListView extends ConsumerWidget {
                       context.t.common.propertyName: item.rent?.property?.stepTwoData?.adTitle ?? "N/A",
                       context.t.common.landlordName: item.rent?.landlord?.name ?? "N/A",
                       context.t.common.rentAmount: item.subtotalAmount?.quickCurrency() ?? "N/A",
-                      context.t.common.totalAmount: item.subtotalAmount?.quickCurrency() ?? "N/A",
+                      context.t.common.totalAmount: item.totalAmount?.quickCurrency() ?? "N/A",
                       context.t.common.status: _status,
                     }.entries.map((entry) {
                       final value = entry.value;
