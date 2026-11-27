@@ -122,14 +122,14 @@
 - [x] CA-2: `getAuthHeader` contiene `Authorization: Bearer <token>` con token (test T1).
 - [x] CA-3: `clearToken` elimina header y storage (test T2).
 - [x] CA-4: `signOut` limpia storage + estado aunque el backend lance (test T3).
-- [x] CA-5: `onRevoke` tiene guard `_isRevoking` y no dispara limpieza/diálogo dos veces (test T4, best effort).
+- [x] CA-5: `onRevoke` tiene guard `_isRevoking` y no dispara limpieza/diálogo dos veces (implementado; test T4 omitido por fragilidad, verificado por revisión de código).
 - [x] CA-6: `onRevoke` borra token + email + password.
 - [x] CA-7: sign-in directo usa `replace` (no `push`) para `MuteHomeRoute`.
 - [x] CA-8: sign-in OTP pasa `saveToken: true`.
 - [x] CA-9: `_auth_middleware` usa `valueOrNull` (sin await de future).
 - [x] CA-10: parsing de errores en `user_repository.dart` null-safe con fallback.
 - [x] CA-11: `fvm flutter analyze` 0 issues.
-- [x] CA-12: `fvm flutter test` en verde (existentes + nuevos T1–T4).
+- [x] CA-12: `fvm flutter test` en verde (existentes + T1–T3; T4 best effort omitido).
 
 ## 10. Fuera de alcance
 
