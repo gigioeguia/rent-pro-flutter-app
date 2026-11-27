@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -37,35 +34,18 @@ class GlobalPermissionHandler {
   }
 
   Future<bool> requestPermission(GlobalPermissions permission) async {
-    final result = switch (permission) {
-      GlobalPermissions.externalStorage => await _requestStorage(),
-      _ => await permission.permission.request(),
-    };
+    final result = await permission.permission.request();
 
     if (result.isRestricted || result.isPermanentlyDenied) {
       return await showOpenSettingsDialog();
     }
     return result.isGranted;
   }
-
-  Future<PermissionStatus> _requestStorage() async {
-    final _deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      if ((await _deviceInfo.androidInfo).version.sdkInt > 29) {
-        return await Permission.manageExternalStorage.request();
-      } else {
-        return Permission.storage.request();
-      }
-    }
-    return PermissionStatus.denied;
-  }
 }
 
 enum GlobalPermissions {
   camera(permission: Permission.camera),
-  gallery(permission: Permission.photos),
-  externalStorage(permission: Permission.manageExternalStorage);
+  gallery(permission: Permission.photos);
 
   final Permission permission;
   const GlobalPermissions({required this.permission});
