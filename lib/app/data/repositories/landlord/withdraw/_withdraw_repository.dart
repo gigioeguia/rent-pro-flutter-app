@@ -73,7 +73,7 @@ class LandlordWithdrawRepository {
 
     try {
       final _response = await dioClient.post(
-        "${DAPIEndpoints.adminMethods}${id != null ? "/$id" : ""}",
+        "${DAPIEndpoints.userMethods}${id != null ? "/$id" : ""}",
         options: DioOptions(
           contentType: DioHeaders.multipartFormDataContentType,
           headers: _httpClient.getAuthHeader,
@@ -106,7 +106,7 @@ class LandlordWithdrawRepository {
   Future<Either<String, String>> deleteUserWithdrawMethod(int id) async {
     try {
       final _response = await dioClient.delete(
-        "${DAPIEndpoints.adminMethods}/$id",
+        "${DAPIEndpoints.userMethods}/$id",
         options: DioOptions(headers: _httpClient.getAuthHeader),
       );
 
