@@ -1,6 +1,6 @@
 # SPEC 02-P2-2 — Enviar `deposit_id` en refund requests (P2-2)
 
-> **Status:** En revisión
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-7)
 > **Date:** 2026-11-27
 > **Objective:** Asociar cada refund request al depósito de seguridad de la renta seleccionada enviando `deposit_id` en la petición de creación.
@@ -87,12 +87,12 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: `toRequest()` incluye `deposit_id` cuando se setea (T1).
-- [ ] CA-2: `toRequest()` serializa `deposit_id` como null si `depositId` es null (T2).
-- [ ] CA-3: El repositorio envía el campo `deposit_id` en el `FormData` (T3).
-- [ ] CA-4: El formulario bloquea el envío si la renta no tiene depósito válido.
-- [ ] CA-5: `fvm flutter analyze` 0 issues.
-- [ ] CA-6: `fvm flutter test` en verde (existentes + T1–T3).
+- [x] CA-1: `toRequest()` incluye `deposit_id` cuando se setea (T1).
+- [x] CA-2: `toRequest()` serializa `deposit_id` como null si `depositId` es null (T2).
+- [x] CA-3: El repositorio envía el campo `deposit_id` en el `FormData` (T3).
+- [x] CA-4: El formulario bloquea el envío si la renta no tiene depósito válido.
+- [x] CA-5: `fvm flutter analyze` 0 issues.
+- [x] CA-6: `fvm flutter test` en verde (existentes + T1–T3).
 
 ## 10. Fuera de alcance
 

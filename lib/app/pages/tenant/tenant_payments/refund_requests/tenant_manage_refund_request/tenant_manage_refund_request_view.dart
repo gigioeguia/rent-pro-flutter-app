@@ -84,7 +84,9 @@ class _TenantManageRefundRequestViewState extends ConsumerState<TenantManageRefu
                             controller.invoiceController.text = v?.securityDeposit?.invoiceNo ?? '';
                           },
                           validator: (value) {
-                            if (value == null || (value.propertyId ?? 0) <= 0) {
+                            if (value == null ||
+                                 (value.propertyId ?? 0) <= 0 ||
+                                 (value.securityDeposit?.id ?? 0) <= 0) {
                               // return "Please select a property";
                               return context.t.form.anyDropdown.errors
                                   .required(label: context.t.common.property)
