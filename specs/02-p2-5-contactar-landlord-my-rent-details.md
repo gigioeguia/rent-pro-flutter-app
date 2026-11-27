@@ -1,6 +1,6 @@
 # SPEC 02-P2-5 — Contactar landlord en My Rent details (P2-5)
 
-> **Status:** En revisión
+> **Status:** Aprovado
 > **Depends on:** SPEC 00 (Fase 0)
 > **Date:** 2026-11-27
 > **Objective:** Hacer que los botones de WhatsApp y Email del flujo de envío de acuerdo (My Rent details) contacten al **landlord** del rent y no al propio tenant, corrigiendo el destinatario de la comunicación.
