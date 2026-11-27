@@ -64,7 +64,9 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 | P1-6 | Revisar permisos Android legacy | `AndroidManifest.xml` | Solo permisos necesarios |
 | P1-7 | Normalizar error parsing null-safe | Repositorios (60+ call sites) | No crash por body null/non-Map |
 
-### Fase 2 – Flujos funcionales críticos (P2, 2-4 semanas)
+### Fase 2 – Flujos funcionales críticos (P2, 2-4 semanas) ✅ CERRADA (2026-11-27)
+
+**Estado:** Cerrada el 2026-11-27. Los 10 specs (P2-1…P2-10) implementados; `fvm flutter analyze` 0 issues; `fvm flutter test` 81/81 verde. Quedan **4 criterios de validación manual en dispositivo/emulador** pendientes (P2-5 CA-6, P2-6 CA-5, P2-7 CA-5, P2-8 CA-8), asignados a QA/mantenedor antes de publicar. No bloquean el cierre de la fase.
 
 | ID | Tarea | Archivos clave | Criterio |
 |----|-------|----------------|----------|
@@ -144,4 +146,4 @@ Objetivo: establecer pipeline reproducible, documentar excepciones y tener una b
 
 ## Próximo paso
 
-Fase 0 y Fase 1 cerradas. Iniciar Fase 2 (flujos funcionales críticos). Pendientes manuales: smoke de release en dispositivo y descargas en Android 7/10/11+/13+ (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8), y configurar branch protection en GitHub (marcar `quality-gate` como required) según `docs/quality-gates.md`.
+Fase 0, Fase 1 y Fase 2 cerradas. Iniciar Fase 3 (estado y UX). Pendientes manuales: smoke de release en dispositivo y descargas en Android 7/10/11+/13+ (P1-5 CA-6/CA-7, P1-6 CA-3/CA-8); validación manual de P2 (P2-5 CA-6, P2-6 CA-5, P2-7 CA-5, P2-8 CA-8); y configurar branch protection en GitHub (marcar `quality-gate` como required) según `docs/quality-gates.md`.

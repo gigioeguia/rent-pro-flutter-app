@@ -76,10 +76,10 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: En `tenant_rent_payment_list_view.dart`, la fila "Total Amount" usa `item.totalAmount?.quickCurrency() ?? "N/A"`.
-- [ ] CA-2: La fila "rentAmount" sigue usando `item.subtotalAmount?.quickCurrency() ?? "N/A"` (sin cambios).
-- [ ] CA-3: `fvm flutter analyze` reporta 0 issues tras el cambio.
-- [ ] CA-4: No se modifican otros archivos (diff limitado a la línea 49 del view).
+- [x] CA-1: En `tenant_rent_payment_list_view.dart`, la fila "Total Amount" usa `item.totalAmount?.quickCurrency() ?? "N/A"` (verificado en línea 49).
+- [x] CA-2: La fila "rentAmount" sigue usando `item.subtotalAmount?.quickCurrency() ?? "N/A"` (sin cambios, línea 48).
+- [x] CA-3: `fvm flutter analyze` reporta 0 issues tras el cambio.
+- [x] CA-4: Diff limitado a la línea 49 del view (verificado).
 - [ ] CA-5: Evidencia manual: captura antes/después mostrando valores distintos en "rentAmount" y "Total Amount" cuando `subtotal_amount != total_amount`.
 
 ## 10. Fuera de alcance
