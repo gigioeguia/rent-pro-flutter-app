@@ -93,9 +93,11 @@
 ## 8. Modelo de datos / contratos
 
 - **Archivos modificados:**
-  - `lib/app/pages/tenant/tenant_my_rent/tenant_my_rent_details/tenant_my_rent_details_view.dart` — 2 literales de URL (WhatsApp y Email).
-- **Archivos nuevos:** ninguno.
-- **Clases/API:** sin cambios de firma.
+  - `lib/app/pages/tenant/tenant_my_rent/tenant_my_rent_details/tenant_my_rent_details_view.dart` — 2 literales de URL (WhatsApp y Email) + guardias de contacto + `TenantMyRentContact` helper.
+  - `lib/app/pages/common/widgets/_shared_widgets.dart` — guardia en `handleLaunchURL` contra targets vacíos/`null`.
+- **Archivos nuevos:**
+  - `test/tenant_my_rent_contact_p2_5_test.dart` — T1–T5.
+- **Clases/API:** `TenantMyRentContact` (nueva, pública, testable).
 
 ---
 
@@ -107,6 +109,7 @@
 - [x] CA-4: `fvm flutter analyze` 0 issues.
 - [x] CA-5: `fvm flutter test` en verde (existentes).
 - [ ] CA-6: Verificación manual: en estado `processing` sin acuerdo subido, WhatsApp/Email abren el contacto del landlord (no del tenant).
+- [x] CA-7: `test/tenant_my_rent_contact_p2_5_test.dart` T1–T5 en verde (routing a landlord + null handling).
 
 ---
 
