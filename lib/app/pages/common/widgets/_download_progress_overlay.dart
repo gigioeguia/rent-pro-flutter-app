@@ -66,9 +66,6 @@ Future<Either<String, File>> showFileDownloadOverlay(
   );
 
   if (saveFile && _result.isSuccess) {
-    await provider
-        .read(globalPermissionHandler)
-        .requestPermission(GlobalPermissions.externalStorage);
     try {
       Directory directory;
 
@@ -76,8 +73,9 @@ Future<Either<String, File>> showFileDownloadOverlay(
         directory = Directory(savePath);
       } else {
         if (Platform.isAndroid) {
-          final baseDir = '/storage/emulated/0/Download';
-          directory = Directory('$baseDir/${AppConfig.appName}');
+          final baseDir = await getExternalStorageDirectory();
+          final root = baseDir ?? await getApplicationDocumentsDirectory();
+          directory = Directory('${root.path}/Download/${AppConfig.appName}');
         } else {
           final baseDir = await getApplicationDocumentsDirectory();
           directory = Directory('${baseDir.path}/${AppConfig.appName}');
