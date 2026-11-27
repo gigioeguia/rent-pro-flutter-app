@@ -34,7 +34,10 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again!',
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
       );
     }
 
@@ -67,7 +70,12 @@ class UserRepository extends AsyncNotifier<User?> {
         return Either.failure(HttpStatus.created.toString());
       }
     } on DioException catch (e) {
-      return Either.failure(e.response?.data['message']);
+      return Either.failure(
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
+      );
     } catch (e) {
       debugPrint('Sign in failed: $e');
       return Either.failure('Something went wrong, please try again!');
@@ -82,26 +90,40 @@ class UserRepository extends AsyncNotifier<User?> {
 
   //--------------------------------Sign Out--------------------------------//
   Future<Either<String?, String?>> signOut() async {
+    Either<String?, String?> _result = Either.failure(
+      'Something went wrong, please try again!',
+    );
     try {
       final _response = await httpClient.restClient.get(
         DAPIEndpoints.signout,
         options: DioOptions(headers: httpClient.getAuthHeader),
       );
       if (_response.statusCode == HttpStatus.ok) {
-        try {
-          await httpClient.clearToken();
-          await httpClient.secureStorage.delete(SecureStorageService.userEmail);
-          await httpClient.secureStorage.delete(SecureStorageService.userPassword);
-        } catch (e) {
-          debugPrint('Secure storage cleanup failed during signOut: $e');
-        }
-        state = const AsyncValue.data(null);
-        return Either.success(_response.data?['message'] ?? '');
+        _result = Either.success(_response.data?['message']?.toString() ?? '');
+      } else {
+        _result = Either.failure('Something went wrong, please try again!');
       }
     } on DioException catch (e) {
-      return Either.failure(e.response?.data['message'] ?? '');
+      _result = Either.failure(
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
+      );
+    } catch (e) {
+      debugPrint('Sign out failed: $e');
+      _result = Either.failure('Something went wrong, please try again!');
+    } finally {
+      try {
+        await httpClient.clearToken();
+        await httpClient.secureStorage.delete(SecureStorageService.userEmail);
+        await httpClient.secureStorage.delete(SecureStorageService.userPassword);
+      } catch (e) {
+        debugPrint('Secure storage cleanup failed during signOut: $e');
+      }
+      state = const AsyncValue.data(null);
     }
-    return Either.failure('Something went wrong, please try again!');
+    return _result;
   }
   //--------------------------------Sign Out--------------------------------//
 
@@ -127,7 +149,10 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again!',
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -162,8 +187,13 @@ class UserRepository extends AsyncNotifier<User?> {
         return Either.success(_data);
       }
     } on DioException catch (e) {
+      final _msg = e.response?.data is Map
+          ? ((e.response!.data as Map)['error'] ??
+                  (e.response!.data as Map)['message'])
+              ?.toString()
+          : null;
       return Either.failure(
-        e.response?.data?['error'] ?? 'Something went wrong, please try again!',
+        _msg ?? 'Something went wrong, please try again!',
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -185,7 +215,12 @@ class UserRepository extends AsyncNotifier<User?> {
         return Either.success('OTP sent successfully');
       }
     } on DioException catch (e) {
-      return Either.failure(e.response?.data?['message'] ?? 'Something went wrong');
+      return Either.failure(
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
+      );
     }
     return Either.failure('Something went wrong, please try again!');
   }
@@ -206,7 +241,10 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again!',
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -230,11 +268,14 @@ class UserRepository extends AsyncNotifier<User?> {
         options: DioOptions(headers: httpClient.getAuthHeader),
       );
       if (_response.statusCode == HttpStatus.ok) {
-        return Either.success(_response.data?['message']);
+        return Either.success(_response.data?['message']?.toString());
       }
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again!',
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again!',
       );
     }
     return Either.failure('Something went wrong, please try again!');
@@ -265,10 +306,14 @@ class UserRepository extends AsyncNotifier<User?> {
       return Either.failure('Something went wrong, please try again');
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Something went wrong, please try again',
+        (e.response?.data is Map
+                ? (e.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Something went wrong, please try again',
       );
     }
   }
+  //------------------------Update Profile------------------------//
 
   //------------------------Get Country------------------------//
   Future<List<Country>> getCountries() async {
@@ -308,13 +353,15 @@ class UserRepository extends AsyncNotifier<User?> {
       );
     } on DioException catch (err) {
       throw Exception(
-        err.response?.data['message'] ?? 'Failed to get subscription plans.',
+        (err.response?.data is Map
+                ? (err.response!.data as Map)['message']?.toString()
+                : null) ??
+            'Failed to get subscription plans.',
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
     }
   }
-
   //------------------------Get Subscription Plans------------------------//
 }
 

@@ -265,6 +265,7 @@ class _SignInViewState extends ConsumerState<SignInView> {
               ctx.router.pushWidget(
                 OtpVerificationView(
                   email: _email,
+                  saveToken: true,
                   onComplete: () => ctx.router.replaceAll(
                     [const MuteHomeRoute()],
                   ),
@@ -283,7 +284,7 @@ class _SignInViewState extends ConsumerState<SignInView> {
         );
         return;
       }
-      ctx.router.push(const MuteHomeRoute());
+      ctx.router.replace(const MuteHomeRoute());
     }
   }
 }

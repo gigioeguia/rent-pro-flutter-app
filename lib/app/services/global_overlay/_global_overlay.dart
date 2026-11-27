@@ -16,6 +16,8 @@ class GlobalOverlayService {
   final Ref ref;
   final BuildContext context;
 
+  bool _isRevoking = false;
+
   factory GlobalOverlayService.init(Ref ref, BuildContext context) {
     final _i = _instance ??= GlobalOverlayService._(ref, context)
       .._registerAuthListener()
@@ -34,55 +36,61 @@ class GlobalOverlayService {
           return;
         }
 
-        final _wasAuthRoute = context.router.currentPath.startsWith('/auth/');
-
+        if (_isRevoking) return;
+        _isRevoking = true;
         try {
-          await ref.read(httpDioClientProvider).clearToken();
-          await ref.read(httpDioClientProvider).secureStorage.delete(
-            SecureStorageService.userEmail,
-          );
-          await ref.read(httpDioClientProvider).secureStorage.delete(
-            SecureStorageService.userPassword,
-          );
-        } catch (e) {
-          debugPrint('Secure storage cleanup failed during revoke: $e');
-        }
-        try {
-          ref.read(userRepositoryProvider.notifier).clearUser();
-        } catch (_) {}
+          final _wasAuthRoute = context.router.currentPath.startsWith('/auth/');
 
-        if (_wasAuthRoute) return;
-
-        if (!context.mounted) return;
-
-        final _result = await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (popContext) {
-            return PopScope(
-              canPop: false,
-              child: InfoDialog.info(
-                // title: 'Session expired',
-                title: context.t.prompt.sessionExpired.title,
-                // description: 'Your session has expired. Please sign in again',
-                description: context.t.prompt.sessionExpired.message,
-                // buttonText: 'Sign In',
-                buttonText: context.t.prompt.sessionExpired.action,
-                iconType: InfoDialogIconType.splashError,
-                onPressed: () {
-                  Navigator.of(popContext).pop();
-                  context.router.replaceAll([
-                    const PageRouteInfo(
-                      'auth',
-                      initialChildren: [SignInRoute()],
-                    )
-                  ]);
-                },
-              ),
+          try {
+            await ref.read(httpDioClientProvider).clearToken();
+            await ref.read(httpDioClientProvider).secureStorage.delete(
+              SecureStorageService.userEmail,
             );
-          },
-        );
-        debugPrint(_result.toString());
+            await ref.read(httpDioClientProvider).secureStorage.delete(
+              SecureStorageService.userPassword,
+            );
+          } catch (e) {
+            debugPrint('Secure storage cleanup failed during revoke: $e');
+          }
+          try {
+            ref.read(userRepositoryProvider.notifier).clearUser();
+          } catch (_) {}
+
+          if (_wasAuthRoute) return;
+
+          if (!context.mounted) return;
+
+          final _result = await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (popContext) {
+              return PopScope(
+                canPop: false,
+                child: InfoDialog.info(
+                  // title: 'Session expired',
+                  title: context.t.prompt.sessionExpired.title,
+                  // description: 'Your session has expired. Please sign in again',
+                  description: context.t.prompt.sessionExpired.message,
+                  // buttonText: 'Sign In',
+                  buttonText: context.t.prompt.sessionExpired.action,
+                  iconType: InfoDialogIconType.splashError,
+                  onPressed: () {
+                    Navigator.of(popContext).pop();
+                    context.router.replaceAll([
+                      const PageRouteInfo(
+                        'auth',
+                        initialChildren: [SignInRoute()],
+                      )
+                    ]);
+                  },
+                ),
+              );
+            },
+          );
+          debugPrint(_result.toString());
+        } finally {
+          _isRevoking = false;
+        }
       }),
     );
   }

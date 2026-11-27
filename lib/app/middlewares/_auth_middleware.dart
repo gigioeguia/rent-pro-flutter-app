@@ -26,9 +26,7 @@ class AuthGuard extends AutoRouteGuard {
       return;
     }
 
-    final userState = await widgetRef.watch(
-      userRepositoryProvider.future,
-    );
+    final userState = widgetRef.read(userRepositoryProvider).valueOrNull;
 
     if (userState == null) {
       resolver.redirectUntil(const SignInRoute(), replace: true);
