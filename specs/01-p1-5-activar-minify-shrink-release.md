@@ -1,6 +1,6 @@
 # SPEC 01 — Activar minify/shrink en release (P1-5)
 
-> **Status:** In review
+> **Status:** Aprobado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-2)
 > **Date:** 2026-11-26
 > **Objective:** Habilitar R8 (`minifyEnabled` y `shrinkResources`) en el buildType release de Android, con reglas ProGuard que preserven Flutter/plugins, y verificar que el APK release compila en CI, reduciendo tamaño y dificultando ingeniería inversa sin romper funcionalidad.
