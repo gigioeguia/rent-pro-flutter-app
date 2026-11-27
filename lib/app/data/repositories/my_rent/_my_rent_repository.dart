@@ -39,7 +39,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get rent invitation list',
+        e.errorMessage(fallback: 'Failed to get rent invitation list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -65,7 +65,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get rent invitation',
+        e.errorMessage(fallback: 'Failed to get rent invitation'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -101,7 +101,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to Approve rent invitation',
+        e.errorMessage(fallback: 'Failed to Approve rent invitation'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -130,7 +130,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to approve rent invitation',
+        e.errorMessage(fallback: 'Failed to approve rent invitation'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -162,7 +162,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to cancel rent invitation',
+        e.errorMessage(fallback: 'Failed to cancel rent invitation'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -191,7 +191,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to accept rent invitation',
+        e.errorMessage(fallback: 'Failed to accept rent invitation'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -230,7 +230,7 @@ class MyRentRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to process rent invitation',
+        e.errorMessage(fallback: 'Failed to process rent invitation'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');

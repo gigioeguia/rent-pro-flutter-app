@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/core.dart' show DAPIEndpoints;
+import '../../core/core.dart' show DAPIEndpoints, httpErrorMessage, DioExceptionMessageX;
 import '../secure_storage/_secure_storage_service.dart';
 
 export 'dart:convert' show jsonEncode, jsonDecode;
@@ -130,8 +130,7 @@ class HTTPDioClient {
         );
       }
     } on dio.DioException catch (e) {
-      final errorMessage = e.response?.data?['message'] as String? ??
-          'Failed to download file! Please try again.';
+      final errorMessage = e.errorMessage(fallback: 'Failed to download file! Please try again.');
       return Either.failure(errorMessage);
     } catch (e) {
       return Either.failure('Failed to download file: ${e.toString()}');
@@ -200,7 +199,7 @@ class AuthListener extends dio.Interceptor {
     final _response = err.response;
     final _reqOpt = _response?.requestOptions;
     if (_response?.statusCode == HttpStatus.unauthorized) {
-      final _msg = _response?.data?['message'] ?? 'Unauthorized access';
+      final _msg = httpErrorMessage(err, fallback: 'Unauthorized access');
       final _authHeader = _reqOpt?.headers['Authorization']?.toString();
       final _failedToken = _authHeader?.replaceFirst(
         RegExp(r'^Bearer\s*', caseSensitive: false),

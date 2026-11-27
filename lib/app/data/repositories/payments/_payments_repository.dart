@@ -43,7 +43,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get security deposit list',
+        e.errorMessage(fallback: 'Failed to get security deposit list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -69,7 +69,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get rent invitation',
+        e.errorMessage(fallback: 'Failed to get rent invitation'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -112,7 +112,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get rent payment list',
+        e.errorMessage(fallback: 'Failed to get rent payment list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -137,8 +137,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ??
-            'Failed to get offline payment method list',
+        e.errorMessage(fallback: 'Failed to get offline payment method list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -181,7 +180,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to make payment.',
+        e.errorMessage(fallback: 'Failed to make payment.'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -220,7 +219,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get refund request list',
+        e.errorMessage(fallback: 'Failed to get refund request list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -245,7 +244,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get refund reason list',
+        e.errorMessage(fallback: 'Failed to get refund reason list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -278,7 +277,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to create refund request.',
+        e.errorMessage(fallback: 'Failed to create refund request.'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -313,7 +312,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to make payment.',
+        e.errorMessage(fallback: 'Failed to make payment.'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -342,7 +341,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to approve.',
+        e.errorMessage(fallback: 'Failed to approve.'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -367,7 +366,7 @@ class PaymentsRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get invoice info',
+        e.errorMessage(fallback: 'Failed to get invoice info'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');

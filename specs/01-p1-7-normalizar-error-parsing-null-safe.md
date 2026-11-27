@@ -1,6 +1,6 @@
 # SPEC 01 — Normalizar error parsing null-safe (P1-7)
 
-> **Status:** Borrador (pendiente de verificación)
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 01 (P1-3), SPEC 01 (P1-4)
 > **Date:** 2026-11-27
 > **Objective:** Eliminar los crashes por `e.response?.data['message']` cuando el body es `null`, `String`, HTML u otro tipo no-Map, centralizando la extracción del mensaje de error en un helper null-safe reutilizable en todos los repositorios.
@@ -123,14 +123,14 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: No existe `e.response?.data['message']` ni `err.response?.data['message']` en `lib/` (grep vacío), salvo en el helper/comentarios.
-- [ ] CA-2: Helper implementado con función + extensión + `_extractMessage`.
-- [ ] CA-3: Helper exportado desde `helpers.dart`.
-- [ ] CA-4: Todos los call sites usan `httpErrorMessage`/`errorMessage`.
-- [ ] CA-5: Tests T1–T9 en `test/http_error_message_test.dart` pasan.
-- [ ] CA-6: `fvm flutter analyze --fatal-infos` 0 issues.
-- [ ] CA-7: `fvm flutter test` en verde (existentes + nuevos).
-- [ ] CA-8: `user_repository.dart` refactorizado sin regresión (tests P1-4 siguen verdes).
+- [x] CA-1: No existe `e.response?.data['message']` ni `err.response?.data['message']` en `lib/` (grep vacío), salvo en el helper/comentarios.
+- [x] CA-2: Helper implementado con función + extensión + `_extractMessage`.
+- [x] CA-3: Helper exportado desde `helpers.dart`.
+- [x] CA-4: Todos los call sites usan `httpErrorMessage`/`errorMessage`.
+- [x] CA-5: Tests T1–T9 en `test/http_error_message_test.dart` pasan.
+- [x] CA-6: `fvm flutter analyze --fatal-infos` 0 issues.
+- [x] CA-7: `fvm flutter test` en verde (existentes + nuevos).
+- [x] CA-8: `user_repository.dart` refactorizado sin regresión (tests P1-4 siguen verdes).
 
 ## 10. Fuera de alcance
 

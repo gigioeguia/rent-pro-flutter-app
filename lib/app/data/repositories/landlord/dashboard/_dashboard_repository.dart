@@ -34,7 +34,7 @@ class LandlordDashboardRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to terms & conditions.',
+        e.errorMessage(fallback: 'Failed to terms & conditions.'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');

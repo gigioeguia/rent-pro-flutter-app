@@ -37,7 +37,7 @@ class ApplicationRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get application list',
+        e.errorMessage(fallback: 'Failed to get application list'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -63,7 +63,7 @@ class ApplicationRepository {
       );
     } on DioException catch (e) {
       throw Exception(
-        e.response?.data['message'] ?? 'Failed to get application',
+        e.errorMessage(fallback: 'Failed to get application'),
       );
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
@@ -90,7 +90,7 @@ class ApplicationRepository {
       gEventListener.fire<ApplicationEvent>(ApplicationEvent.modified);
       return _application;
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message'] ?? 'Something went wrong, please try again');
+      throw Exception(e.errorMessage(fallback: 'Something went wrong, please try again'));
     } catch (e) {
       throw Exception('An unexpected error occurred: $e');
     }
@@ -128,7 +128,7 @@ class ApplicationRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to process application',
+        e.errorMessage(fallback: 'Failed to process application'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -167,7 +167,7 @@ class ApplicationRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to sign application',
+        e.errorMessage(fallback: 'Failed to sign application'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -198,7 +198,7 @@ class ApplicationRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to reject application',
+        e.errorMessage(fallback: 'Failed to reject application'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');
@@ -227,7 +227,7 @@ class ApplicationRepository {
       );
     } on DioException catch (e) {
       return Either.failure(
-        e.response?.data['message'] ?? 'Failed to approve application',
+        e.errorMessage(fallback: 'Failed to approve application'),
       );
     } catch (e) {
       return Either.failure('An unexpected error occurred: $e');

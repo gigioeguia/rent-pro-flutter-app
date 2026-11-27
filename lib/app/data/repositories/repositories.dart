@@ -3,7 +3,7 @@ import '../../services/services.dart' show GlobalEventListener, HTTPDioClient, g
 
 export 'dart:io';
 export 'package:fdevs_fitkit/fdevs_fitkit.dart' show Either;
-export '../../core/core.dart' show DAPIEndpoints, DAppSPrefsKeys;
+export '../../core/core.dart' show DAPIEndpoints, DAppSPrefsKeys, httpErrorMessage, DioExceptionMessageX;
 export '../../services/services.dart';
 
 export 'application/_application_repository.dart';

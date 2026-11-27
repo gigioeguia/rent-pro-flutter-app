@@ -30,7 +30,7 @@ class LandlordTenancyAgreementRepository {
       );
     } on DioException catch (e) {
       final _exception = Exception(
-        e.response?.data['message'] ?? 'Failed to get agreements',
+        e.errorMessage(fallback: 'Failed to get agreements'),
       );
 
       throw _exception;
