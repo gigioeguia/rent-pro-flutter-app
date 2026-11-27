@@ -82,11 +82,11 @@
 
 ## 9. Criterios de aceptación
 
-- [ ] CA-1: En `landlord_setup_profile_view.dart`, el botón "Continue" evalúa `FormWrapper.validate(formContext)` antes de llamar `_handleFormSubmit`.
-- [ ] CA-2: Con campos requeridos vacíos/inválidos, tocar "Continue" no invoca `handleUpdateProfile` (verificable por ausencia de overlay/navegación).
-- [ ] CA-3: Con todos los campos válidos, tocar "Continue" ejecuta el flujo actual (`handleUpdateProfile` + navegación/error).
-- [ ] CA-4: `fvm flutter analyze` reporta 0 issues tras el cambio.
-- [ ] CA-5: Evidencia manual: captura con submit bloqueado mostrando errores de campo, y otra con submit exitoso.
+- [x] CA-1: En `landlord_setup_profile_view.dart`, el botón "Continue" evalúa `FormWrapper.validate(formContext)` antes de llamar `_handleFormSubmit`.
+- [x] CA-2: Con campos requeridos vacíos/inválidos, tocar "Continue" no invoca `handleUpdateProfile` (verificable por ausencia de overlay/navegación).
+- [x] CA-3: Con todos los campos válidos, tocar "Continue" ejecuta el flujo actual (`handleUpdateProfile` + navegación/error).
+- [x] CA-4: `fvm flutter analyze` reporta 0 issues tras el cambio.
+- [ ] CA-5: Evidencia manual: captura con submit bloqueado mostrando errores de campo, y otra con submit exitoso. (Pendiente validación manual en emulador/dispositivo)
 
 ## 10. Fuera de alcance
 
