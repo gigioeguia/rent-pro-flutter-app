@@ -16,6 +16,10 @@ class SignInViewNotifier extends ChangeNotifier {
   bool rememberMe = true;
   void toggleRememberMe([bool? value]) {
     rememberMe = value ?? !rememberMe;
+    if (!rememberMe) {
+      signinProvider.httpClient.secureStorage.delete(SecureStorageService.userEmail);
+      signinProvider.httpClient.secureStorage.delete(SecureStorageService.userPassword);
+    }
     notifyListeners();
   }
 
@@ -26,23 +30,22 @@ class SignInViewNotifier extends ChangeNotifier {
   //-------------------------Form Field Props-------------------------//
 
   Future<Either<String?, String?>> handleSignIn() async {
+    if (!rememberMe) {
+      await signinProvider.httpClient.secureStorage.delete(
+        SecureStorageService.userEmail,
+      );
+      await signinProvider.httpClient.secureStorage.delete(
+        SecureStorageService.userPassword,
+      );
+    }
+
     final _result = await signinProvider.signIn(
       email: emailController.text,
       password: passwordController.text,
     );
 
     if (_result.isSuccess) {
-      if (rememberMe) {
-        await handleRememberMe(false);
-      } else {
-        await signinProvider.httpClient.secureStorage.delete(
-          SecureStorageService.userEmail,
-        );
-        await signinProvider.httpClient.secureStorage.delete(
-          SecureStorageService.userPassword,
-        );
-      }
-
+      if (rememberMe) await handleRememberMe(false);
       return Either.success('Signed in successfully');
     }
 
@@ -53,10 +56,15 @@ class SignInViewNotifier extends ChangeNotifier {
     final _secure = signinProvider.httpClient.secureStorage;
 
     if (recover) {
-      emailController.text =
-          await _secure.read(SecureStorageService.userEmail) ?? '';
-      passwordController.text =
+      final _savedEmail = await _secure.read(SecureStorageService.userEmail) ?? '';
+      final _savedPassword =
           await _secure.read(SecureStorageService.userPassword) ?? '';
+      if (emailController.text.isEmpty) {
+        emailController.text = _savedEmail;
+      }
+      if (passwordController.text.isEmpty) {
+        passwordController.text = _savedPassword;
+      }
       return true;
     }
     await _secure.write(SecureStorageService.userEmail, emailController.text);

@@ -23,7 +23,7 @@ Future<void> main() async {
   ).wait;
 
   final _secureStorage = SecureStorageService();
-  await _migrateSecretsToSecureStorage(_prefs, _secureStorage);
+  await migrateSecretsToSecureStorage(_prefs, _secureStorage);
 
   final httpClient = await HTTPDioClient.initClient(
     prefs: _prefs,
@@ -45,30 +45,54 @@ Future<void> main() async {
   );
 }
 
-Future<void> _migrateSecretsToSecureStorage(
+Future<void> migrateSecretsToSecureStorage(
   SharedPreferences prefs,
   SecureStorageService secure,
 ) async {
-  if (prefs.getBool(DAppSPrefsKeys.secureStorageMigrated) == true) return;
+  final hasLegacySecrets = prefs.containsKey(DAppSPrefsKeys.authToken) ||
+      prefs.containsKey(DAppSPrefsKeys.userEmail) ||
+      prefs.containsKey(DAppSPrefsKeys.userPassword);
+  if (!hasLegacySecrets) return;
   try {
+    var allRemoved = true;
+
+    final existingToken = await secure.read(SecureStorageService.authToken);
     final token = prefs.getString(DAppSPrefsKeys.authToken);
     if (token != null) {
-      await secure.write(SecureStorageService.authToken, token);
-      await prefs.remove(DAppSPrefsKeys.authToken);
+      if (existingToken == null) {
+        await secure.write(SecureStorageService.authToken, token);
+      }
+      final removed = await prefs.remove(DAppSPrefsKeys.authToken);
+      if (!removed) allRemoved = false;
     }
+
+    final existingEmail = await secure.read(SecureStorageService.userEmail);
     final email = prefs.getString(DAppSPrefsKeys.userEmail);
     if (email != null) {
-      await secure.write(SecureStorageService.userEmail, email);
-      await prefs.remove(DAppSPrefsKeys.userEmail);
+      if (existingEmail == null) {
+        await secure.write(SecureStorageService.userEmail, email);
+      }
+      final removed = await prefs.remove(DAppSPrefsKeys.userEmail);
+      if (!removed) allRemoved = false;
     }
+
+    final existingPassword = await secure.read(SecureStorageService.userPassword);
     final password = prefs.getString(DAppSPrefsKeys.userPassword);
     if (password != null) {
-      await secure.write(SecureStorageService.userPassword, password);
-      await prefs.remove(DAppSPrefsKeys.userPassword);
+      if (existingPassword == null) {
+        await secure.write(SecureStorageService.userPassword, password);
+      }
+      final removed = await prefs.remove(DAppSPrefsKeys.userPassword);
+      if (!removed) allRemoved = false;
     }
-    await prefs.setBool(DAppSPrefsKeys.secureStorageMigrated, true);
+
+    if (allRemoved) {
+      final marked = await prefs.setBool(DAppSPrefsKeys.secureStorageMigrated, true);
+      if (!marked) allRemoved = false;
+    }
   } catch (e) {
     debugPrint('Secure storage migration failed: $e');
+    rethrow;
   }
 }
 

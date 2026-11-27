@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -67,6 +68,9 @@ class UserRepository extends AsyncNotifier<User?> {
       }
     } on DioException catch (e) {
       return Either.failure(e.response?.data['message']);
+    } catch (e) {
+      debugPrint('Sign in failed: $e');
+      return Either.failure('Something went wrong, please try again!');
     }
     return Either.failure('Something went wrong, please try again!');
   }
@@ -84,9 +88,13 @@ class UserRepository extends AsyncNotifier<User?> {
         options: DioOptions(headers: httpClient.getAuthHeader),
       );
       if (_response.statusCode == HttpStatus.ok) {
-        await httpClient.clearToken();
-        await httpClient.secureStorage.delete(SecureStorageService.userEmail);
-        await httpClient.secureStorage.delete(SecureStorageService.userPassword);
+        try {
+          await httpClient.clearToken();
+          await httpClient.secureStorage.delete(SecureStorageService.userEmail);
+          await httpClient.secureStorage.delete(SecureStorageService.userPassword);
+        } catch (e) {
+          debugPrint('Secure storage cleanup failed during signOut: $e');
+        }
         state = const AsyncValue.data(null);
         return Either.success(_response.data?['message'] ?? '');
       }
@@ -131,7 +139,7 @@ class UserRepository extends AsyncNotifier<User?> {
     required String email,
     required String otp,
 
-    /// If [saveToken] `null`, Does nothing. if `true` then overrides with saving to prefs. if `false` just overrides
+    /// If [saveToken] `null`, Does nothing. if `true` then overrides with saving to secure storage. if `false` just overrides
     bool? saveToken,
   }) async {
     try {
@@ -141,8 +149,14 @@ class UserRepository extends AsyncNotifier<User?> {
       );
       if (_response.statusCode == HttpStatus.ok) {
         final _data = OtpSubmitModel.fromJson(_response.data);
-        if (saveToken != null && _data.token != null) {
-          await httpClient.setToken(_data.token!, saveToken == true);
+        if (saveToken == true) {
+          if (_data.token != null) {
+            await httpClient.setToken(_data.token!, true);
+          } else {
+            await httpClient.clearToken();
+          }
+        } else if (saveToken == false && _data.token != null) {
+          await httpClient.setToken(_data.token!, false);
         }
 
         return Either.success(_data);

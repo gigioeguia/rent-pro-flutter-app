@@ -26,19 +26,32 @@ class GlobalOverlayService {
 
   void _registerAuthListener() {
     ref.read(httpDioClientProvider).restClient.interceptors.add(
-      AuthListener(onRevoke: () async {
-        if (context.router.currentPath.startsWith('/auth/')) return;
+      AuthListener(onRevoke: (failedToken) async {
+        final _currentToken = ref.read(httpDioClientProvider).token;
+        if (failedToken != null &&
+            _currentToken != null &&
+            failedToken != _currentToken) {
+          return;
+        }
 
-        await ref.read(httpDioClientProvider).clearToken();
-        await ref.read(httpDioClientProvider).secureStorage.delete(
-          SecureStorageService.userEmail,
-        );
-        await ref.read(httpDioClientProvider).secureStorage.delete(
-          SecureStorageService.userPassword,
-        );
+        final _wasAuthRoute = context.router.currentPath.startsWith('/auth/');
+
+        try {
+          await ref.read(httpDioClientProvider).clearToken();
+          await ref.read(httpDioClientProvider).secureStorage.delete(
+            SecureStorageService.userEmail,
+          );
+          await ref.read(httpDioClientProvider).secureStorage.delete(
+            SecureStorageService.userPassword,
+          );
+        } catch (e) {
+          debugPrint('Secure storage cleanup failed during revoke: $e');
+        }
         try {
           ref.read(userRepositoryProvider.notifier).clearUser();
         } catch (_) {}
+
+        if (_wasAuthRoute) return;
 
         if (!context.mounted) return;
 

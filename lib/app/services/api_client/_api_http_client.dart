@@ -53,15 +53,15 @@ class HTTPDioClient {
         enableLogging: kDebugMode,
       );
 
-      final _token = await _i.secureStorage.read(SecureStorageService.authToken);
-      if (_token != null) await _i.setToken(_token);
-
       _i.restClient = dio.Dio()
         ..options = dio.BaseOptions(
           baseUrl: DAPIEndpoints.apiURL,
           connectTimeout: _i._requestTimeout,
           headers: {"Accept": "application/json"},
         );
+
+      final _token = await _i.secureStorage.read(SecureStorageService.authToken);
+      if (_token != null) await _i.setToken(_token);
 
       if (_i.enableLogging) {
         _i.restClient.interceptors.add(_i._logger);
@@ -74,6 +74,7 @@ class HTTPDioClient {
   }
 
   String? _token;
+  String? get token => _token;
   Map<String, String> get getAuthHeader {
     if (_token == null) return {};
     return {
@@ -82,14 +83,16 @@ class HTTPDioClient {
   }
 
   Future<void> setToken(String value, [bool save = false]) async {
-    _token = value;
     if (save) {
       await secureStorage.write(SecureStorageService.authToken, value);
     }
+    _token = value;
+    restClient.options.headers['Authorization'] = 'Bearer $value';
   }
 
   Future<void> clearToken() async {
     _token = null;
+    restClient.options.headers.remove('Authorization');
     await secureStorage.delete(SecureStorageService.authToken);
   }
 
@@ -184,7 +187,7 @@ extension DioFormExtension on Map<String, dynamic> {
 
 class AuthListener extends dio.Interceptor {
   AuthListener({required this.onRevoke});
-  final void Function() onRevoke;
+  final Future<void> Function(String? failedToken) onRevoke;
 
   @override
   void onError(
@@ -195,7 +198,12 @@ class AuthListener extends dio.Interceptor {
     final _reqOpt = _response?.requestOptions;
     if (_response?.statusCode == HttpStatus.unauthorized) {
       final _msg = _response?.data?['message'] ?? 'Unauthorized access';
-      onRevoke();
+      final _authHeader = _reqOpt?.headers['Authorization']?.toString();
+      final _failedToken = _authHeader?.replaceFirst(
+        RegExp(r'^Bearer\s*', caseSensitive: false),
+        '',
+      );
+      onRevoke(_failedToken);
       return handler.reject(
         dio.DioException(
           requestOptions: _reqOpt ?? dio.RequestOptions(),

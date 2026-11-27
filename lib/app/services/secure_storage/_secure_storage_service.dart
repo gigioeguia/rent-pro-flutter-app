@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 /// almacenamiento seguro (Keychain/Keystore) y facilitar las pruebas.
 class SecureStorageService {
@@ -20,7 +21,15 @@ class SecureStorageService {
 
   Future<String?> read(String key) async {
     if (_inMemory) return _memory![key];
-    return _storage!.read(key: key);
+    try {
+      return await _storage!.read(key: key);
+    } catch (e) {
+      debugPrint('Secure storage read failed for $key: $e');
+      try {
+        await _storage!.delete(key: key);
+      } catch (_) {}
+      return null;
+    }
   }
 
   Future<void> write(String key, String value) async {
