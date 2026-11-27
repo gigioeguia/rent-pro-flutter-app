@@ -45,6 +45,12 @@ class _LandlordRentInvitationDetailsViewState extends ConsumerState<LandlordRent
       _data?.thisMonthRentPayment?.thisMonthPaymentStatus,
     );
 
+    final _canApprove = LandlordRentInvitationApproval.canApprove(
+      _data,
+      _status,
+      _depositStatus,
+    );
+
     final _theme = Theme.of(context);
 
     const _ckFlex = 6;
@@ -475,7 +481,7 @@ class _LandlordRentInvitationDetailsViewState extends ConsumerState<LandlordRent
               ),
             ),
           ),
-          bottomNavigationBar: _status.isPending || (_status.isProcessing && !_depositStatus.isPaid)
+          bottomNavigationBar: (!_canApprove && !_status.isActive)
               ? null
               : ScaffoldBottomNavWrapper(
                   child: Skeletonizer(
@@ -483,20 +489,16 @@ class _LandlordRentInvitationDetailsViewState extends ConsumerState<LandlordRent
                     ignoreContainers: true,
                     child: Row(
                       children: [
-                        if (_status.isProcessing && _depositStatus.isPaid)
+                        if (_canApprove)
                           Expanded(
                             child: SizedBox(
                               height: 50,
                               width: double.maxFinite,
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  if (Form.maybeOf(formContext)?.validate() == true) {
-                                    return await _handleApproved(
-                                      context,
-                                      _data,
-                                    );
-                                  }
-                                },
+                                onPressed: () async => await _handleApproved(
+                                  context,
+                                  _data,
+                                ),
                                 // child: const Text('Approve'),
                                 child: Text(context.t.action.approve),
                               ),
@@ -535,6 +537,19 @@ class _LandlordRentInvitationDetailsViewState extends ConsumerState<LandlordRent
 
   Future<void> _handleApproved(BuildContext context, RentDetails? data) async {
     if (!_warnIfNull(context, data?.id)) return;
+
+    if (data?.hasTTAgreement != true) {
+      showCustomSnackBar(
+        context,
+        content: Text(
+          context.t.exceptions.invalidApiDataRefreshPage(
+            dataType: context.t.common.rentAgreement,
+          ),
+        ),
+        customSnackBarType: CustomOverlayType.error,
+      );
+      return;
+    }
 
     final _confirmation = await showDialog<bool>(
       context: context,
@@ -603,5 +618,18 @@ class _LandlordRentInvitationDetailsViewState extends ConsumerState<LandlordRent
     _apiEventSub = gEventListener.on<MyRentEvent>().listen((_) {
       return ref.refresh(myRentDetailsProvider(widget.id));
     });
+  }
+}
+
+/// Helpers testables para la condición de aprobación de renta.
+class LandlordRentInvitationApproval {
+  static bool canApprove(
+    RentDetails? data,
+    MyRentStatus status,
+    PaymentStatus depositStatus,
+  ) {
+    if (!status.isProcessing) return false;
+    if (!depositStatus.isPaid) return false;
+    return data?.hasTTAgreement == true;
   }
 }

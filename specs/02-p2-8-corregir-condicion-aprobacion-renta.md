@@ -1,6 +1,6 @@
 # SPEC 02-P2-8 — Condición de aprobación de renta (P2-8)
 
-> **Status:** Borrador
+> **Status:** Implementado
 > **Depends on:** SPEC 00 (Fase 0), SPEC 02-P2-5 (flujo de acuerdo firmado)
 > **Date:** 2026-11-27
 > **Objective:** Hacer que el botón "Approve" del detalle de renta del landlord solo se habilite cuando el rent está en `processing`, el depósito está pagado **y** el tenant ya subió el acuerdo firmado (`hasTTAgreement == true`), corrigiendo la inconsistencia con el flujo de aplicaciones.
@@ -110,13 +110,13 @@
 
 ### 9. Criterios de aceptación
 
-- [ ] CA-1: `LandlordRentInvitationApproval.canApprove` retorna `true` solo en `processing + paid + hasTTAgreement`.
-- [ ] CA-2: El botón "Approve" usa `_canApprove` para su visibilidad.
-- [ ] CA-3: La barra inferior se oculta cuando `!_canApprove && !_status.isActive`.
-- [ ] CA-4: Se elimina la validación `Form.maybeOf(...)?.validate()` del `onPressed`.
-- [ ] CA-5: `_handleApproved` aborta con snackbar si falta el acuerdo firmado (antes del diálogo).
-- [ ] CA-6: `fvm flutter analyze` 0 issues.
-- [ ] CA-7: `fvm flutter test` en verde (existentes + T1–T6).
+- [x] CA-1: `LandlordRentInvitationApproval.canApprove` retorna `true` solo en `processing + paid + hasTTAgreement`.
+- [x] CA-2: El botón "Approve" usa `_canApprove` para su visibilidad.
+- [x] CA-3: La barra inferior se oculta cuando `!_canApprove && !_status.isActive`.
+- [x] CA-4: Se elimina la validación `Form.maybeOf(...)?.validate()` del `onPressed`.
+- [x] CA-5: `_handleApproved` aborta con snackbar si falta el acuerdo firmado (antes del diálogo).
+- [x] CA-6: `fvm flutter analyze` 0 issues.
+- [x] CA-7: `fvm flutter test` en verde (existentes + T1–T6).
 - [ ] CA-8 (manual): Con depósito pagado pero sin acuerdo subido, el landlord no ve "Approve"; tras la subida del tenant, aparece.
 
 ---
