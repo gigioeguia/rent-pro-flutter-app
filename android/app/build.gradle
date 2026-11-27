@@ -63,8 +63,9 @@ android {
             // Sin credenciales se firma con la clave debug (builds de CI/QA).
             // NO apto para publicación en Play Store.
             signingConfig hasCredentials ? signingConfigs.release : signingConfigs.debug
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
