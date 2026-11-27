@@ -34,7 +34,7 @@ class AddPropertyStepOneModel extends AddPropertyStepModelBase {
   factory AddPropertyStepOneModel.fromJson(Map<String, dynamic> json) {
     return AddPropertyStepOneModel(
       propertyType: json["type"] == null ? null : PropertyType.fromString(json["type"]),
-      categoryId: json["category"]?["id"],
+      categoryId: json["category_id"] ?? json["category"]?["id"],
     );
   }
   @override
