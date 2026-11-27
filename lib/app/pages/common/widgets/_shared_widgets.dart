@@ -237,6 +237,12 @@ abstract class SharedWidgets {
       if (parsedUrl == null || !parsedUrl.hasScheme) {
         throw FormatException('Invalid URL format');
       }
+      // Reject targets that resolved to a missing/null contact.
+      final _schemeIndex = url.indexOf('://');
+      final _target = _schemeIndex >= 0 ? url.substring(_schemeIndex + 3).trim() : '';
+      if (_target.isEmpty || url.toLowerCase().contains('null')) {
+        throw FormatException('Contact information is unavailable.');
+      }
 
       final launched = await launchUrl(
         parsedUrl,

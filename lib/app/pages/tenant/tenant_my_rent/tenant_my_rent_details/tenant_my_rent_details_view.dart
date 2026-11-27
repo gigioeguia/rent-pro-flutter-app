@@ -643,12 +643,21 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                             child: SizedBox(
                               height: 50,
                               child: IconButton.filled(
-                                onPressed: () async {
-                                  return await SharedWidgets.handleLaunchURL(
-                                    context,
-                                    'https://wa.me/${_data?.landlord?.phone?.buildPhone}',
-                                  );
-                                },
+                                 onPressed: () async {
+                                   final _landlordPhone = _data?.landlord?.phone?.buildPhone;
+                                   if (_landlordPhone == null || _landlordPhone.trim().isEmpty) {
+                                     showCustomSnackBar(
+                                       context,
+                                       content: Text('Landlord contact is unavailable.'),
+                                       customSnackBarType: CustomOverlayType.error,
+                                     );
+                                     return;
+                                   }
+                                   return await SharedWidgets.handleLaunchURL(
+                                     context,
+                                     'https://wa.me/$_landlordPhone',
+                                   );
+                                 },
                                 icon: Skeleton.shade(
                                   child: Brand(Brands.whatsapp, size: 20),
                                 ),
@@ -669,9 +678,18 @@ class _TenantMyRentDetailsViewState extends ConsumerState<TenantMyRentDetailsVie
                               height: 50,
                               child: IconButton.filled(
                                 onPressed: () async {
+                                  final _landlordEmail = _data?.landlord?.email;
+                                  if (_landlordEmail == null || _landlordEmail.trim().isEmpty) {
+                                    showCustomSnackBar(
+                                      context,
+                                      content: Text('Landlord contact is unavailable.'),
+                                      customSnackBarType: CustomOverlayType.error,
+                                    );
+                                    return;
+                                  }
                                   return await SharedWidgets.handleLaunchURL(
                                     context,
-                                    'mailto:${_data?.landlord?.email}',
+                                    'mailto:$_landlordEmail',
                                   );
                                 },
                                 icon: Icon(IconlyBold.message),
