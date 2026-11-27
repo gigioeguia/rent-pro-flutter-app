@@ -155,6 +155,7 @@ enum ApplicationStatus {
   });
 
   static ApplicationStatus fromId(int? value) {
+    if (value == null) return ApplicationStatus.pending;
     return ApplicationStatus.values.firstWhere(
       (element) => element.statusId == value,
       orElse: () => ApplicationStatus.pending,
