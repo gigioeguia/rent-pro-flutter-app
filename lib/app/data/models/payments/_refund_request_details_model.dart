@@ -97,6 +97,7 @@ class RefundRequestDetails {
 
   Map<String, dynamic> toRequest() {
     return {
+      "deposit_id": depositId,
       "property_id": propertyId,
       "reason_id": reasonId,
       "bank_info[account_name]": bankInfo?.accHolder,

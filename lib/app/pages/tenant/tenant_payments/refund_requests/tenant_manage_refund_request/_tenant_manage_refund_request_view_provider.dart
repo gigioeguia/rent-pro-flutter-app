@@ -15,6 +15,7 @@ class TenantManageRefundRequestViewNotifier extends ChangeNotifier {
 
   Future<Either<String, RefundRequestDetails>> handleFormSubmit() async {
     final _data = RefundRequestDetails(
+      depositId: selectedRent?.securityDeposit?.id,
       propertyId: selectedRent?.propertyId,
       reasonId: selectedReasonId,
       bankInfo: BankInfo(
